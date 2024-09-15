@@ -1,47 +1,116 @@
-name: CI_action
+# name: CI_action
+
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node-version: [14.x]
+    
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
+
+#     - name: Set up Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ matrix.node-version }}
+
+#     - name: Install dependencies in backend
+#       run: npm install
+#       working-directory: ./backend
+
+#     - name: Run tests in backend
+#       run: npm test
+#       working-directory: ./backend
+
+#     - name: Build in backend
+#       run: npm run build
+#       working-directory: ./backend
+
+#     - name: Install dependencies in frontend
+#       run: npm install
+#       working-directory: ./frontend
+
+#     - name: Run tests in frontend
+#       run: npm test
+#       working-directory: ./frontend
+
+#     - name: Build in frontend
+#       run: npm run build
+#       working-directory: ./frontend
+
+name: CI for Frontend and Backend
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  backend-build:
+    name: Backend Build and Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
-    
+        node-version: [16.x]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies in backend
+    - name: Install backend dependencies
       run: npm install
       working-directory: ./backend
 
-    - name: Run tests in backend
+    - name: Run backend tests
       run: npm test
       working-directory: ./backend
 
-    - name: Build in backend
+    - name: Build backend
       run: npm run build
       working-directory: ./backend
 
-    - name: Install dependencies in frontend
+  frontend-build:
+    name: Frontend Build and Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]  
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install frontend dependencies
       run: npm install
       working-directory: ./frontend
 
-    - name: Run tests in frontend
+    - name: Run frontend tests
       run: npm test
       working-directory: ./frontend
 
-    - name: Build in frontend
+    - name: Build frontend
       run: npm run build
       working-directory: ./frontend
