@@ -3,17 +3,19 @@ import React from "react";
 const page = () => {
   return (
     <div className="mt-16">
-      <div className="flex justify-center items-center xl:w-3/4 mx-auto space-x-4">
-        <span className="font-bold text-xl flex-shrink-0 whitespace-nowrap">
-          Browse articles
-        </span>{" "}
+      <div className="flex justify-center items-center space-x-4 xl:w-1/2 mx-auto"> 
+        {/* Bold message to the left of the search bar */}
+        <span className="font-bold text-xl flex-shrink-0 whitespace-nowrap">Browse articles</span> {/* Prevent wrapping and shrinking */}
+        
         <input
           type="search"
-          className="block w-full flex-auto rounded-full border border-solid border-neutral-300 bg-white px-6 py-3 text-base font-normal leading-6 text-neutral-700 outline-none shadow-md transition duration-200 ease-in-out focus:z-[3] focus:border-blue-500 focus:ring focus:ring-blue-300 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-blue-500"
+          className="block w-72 flex-shrink rounded-full border border-solid border-neutral-300 bg-white px-6 py-3 text-base font-normal leading-6 text-neutral-700 outline-none shadow-md transition duration-200 ease-in-out focus:z-[3] focus:border-blue-500 focus:ring focus:ring-blue-300 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-blue-500"
           placeholder="Search for an article..."
           aria-label="Search"
           aria-describedby="button-addon2"
         />
+
+        {/* Search icon */}
         <span
           className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-sm font-normal text-neutral-700 dark:text-neutral-200"
           id="basic-addon2"

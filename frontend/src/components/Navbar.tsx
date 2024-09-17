@@ -8,13 +8,13 @@ const Navbar = () => {
         <a className="btn btn-ghost text-3xl">SPEED</a>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1 text-xl">
+        <ul className="menu menu-horizontal px-1 text-3xl font-bold">
           <li>
-            <Link href="/home">Home</Link>
+            <Link  href="/home">Home</Link>
           </li>
           <li>
             <details>
-              <summary>Menu</summary>
+              <summary >Menu</summary>
               <ul className="bg-base-100 rounded-t-none p-2 text-lg">
                 <li>
                   <Link href="/pages/browse">Browse</Link>
