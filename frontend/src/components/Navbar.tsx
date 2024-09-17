@@ -14,10 +14,10 @@ const Navbar = () => {
           </li>
           <li>
             <details>
-              <summary>Parent</summary>
+              <summary>Menu</summary>
               <ul className="bg-base-100 rounded-t-none p-2 text-lg">
                 <li>
-                  <Link href="/pages/search">Search</Link>
+                  <Link href="/pages/browse">Browse</Link>
                 </li>
                 <li>
                   <Link href="/pages/submit">Submit</Link>
