@@ -1,0 +1,68 @@
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Temporary files
+*.temp
+*.tmp
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Testing output
+*.log
+*.tsbuildinfo
+
+# Dependency directories
+frontend/node_modules/
+backend/node_modules/
+
+# Optional: Ignore files and directories specific to other tools
+*.iml
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Misc
+*.swp
+*.swo
+*.swn
