@@ -33,6 +33,7 @@ const SubmitArticlePage = () => {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+   
     const authorsArray = article.authors.split(',').map((author) => author.trim());
 
     const articleToSubmit = {
@@ -52,8 +53,8 @@ const SubmitArticlePage = () => {
 
       if (response.ok) {
         console.log('Article submitted successfully');
-        setArticle(DefaultEmptyArticle); // Reset form
-        router.push('/'); // Navigate to homepage or another page after submission
+        setArticle(DefaultEmptyArticle); 
+        router.push('/'); 
       } else {
         console.error('Failed to submit article');
       }
@@ -63,90 +64,39 @@ const SubmitArticlePage = () => {
   };
 
   return (
-    <div>
-      <h1>Submit a New Article</h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={article.title}
-            onChange={onChange}
-            required
-          />
-        </div>
+    <div className="flex justify-center items-center h-screen">
+      <form onSubmit={onSubmit} className="bg-white p-6 rounded shadow-lg">
+        <h1 className="text-xl font-bold mb-4">Article Submission</h1>
 
-        <div>
-          <label htmlFor="authors">Authors (comma-separated):</label>
-          <input
-            type="text"
-            id="authors"
-            name="authors"
-            value={article.authors}
-            onChange={onChange}
-            required
-          />
-        </div>
+        <label htmlFor="title" className="block mb-2">Title:</label>
+        <input type="text" id="title" name="title" value={article.title} onChange={onChange} required className="mb-4 p-2 w-full"/>
 
-        <div>
-          <label htmlFor="source">Source:</label>
-          <input
-            type="text"
-            id="source"
-            name="source"
-            value={article.source}
-            onChange={onChange}
-            required
-          />
-        </div>
+        
+        <label htmlFor="authors" className="block mb-2">Authors:</label>
+        <input type="text" id="authors" name="authors" value={article.authors} onChange={onChange} required className="mb-4 p-2 w-full"/>
 
-        <div>
-          <label htmlFor="publicationYear">Publication Year:</label>
-          <input
-            type="text"
-            id="publicationYear"
-            name="publicationYear"
-            value={article.publicationYear}
-            onChange={onChange}
-            required
-          />
-        </div>
 
-        <div>
-          <label htmlFor="doi">DOI:</label>
-          <input
-            type="text"
-            id="doi"
-            name="doi"
-            value={article.doi}
-            onChange={onChange}
-            required
-          />
-        </div>
 
-        <div>
-          <label htmlFor="rating">Rating (1-5):</label>
-          <select
-            id="rating"
-            name="rating"
-            value={article.rating}
-            onChange={onChange}
-            required
-          >
-            <option value="0" disabled>
-              Select a rating
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
+        <label htmlFor="source" className="block mb-2">Source:</label>
+        <input type="text" id="source" name="source" value={article.source} onChange={onChange} required className="mb-4 p-2 w-full"/>
 
-        <button type="submit">Submit Article</button>
+        <label htmlFor="publicationYear" className="block mb-2">Publication Year:</label>
+        <input type="text" id="publicationYear" name="publicationYear" value={article.publicationYear} onChange={onChange} required className="mb-4 p-2 w-full"/>
+
+        <label htmlFor="doi" className="block mb-2">DOI:</label>
+        <input type="text" id="doi" name="doi" value={article.doi} onChange={onChange} required className="mb-4 p-2 w-full"/>
+
+        <label htmlFor="rating" className="block mb-2">Rating:</label>
+        <select id="rating" name="rating" value={article.rating} onChange={onChange} required className="mb-4 p-2 w-full">
+          <option value="0" disabled>Select a rating</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+
+        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Submit Article</button>
       </form>
     </div>
   );
