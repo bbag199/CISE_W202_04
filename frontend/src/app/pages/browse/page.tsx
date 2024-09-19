@@ -1,6 +1,219 @@
-import React from "react";
+// 'use client';
 
-const page = () => {
+// import React, { useState, useEffect } from 'react';
+// import Link from 'next/link';
+
+// interface Article {
+//   _id: string;
+//   title: string;
+//   authors: string[];
+//   source: string;
+//   publicationYear: string;
+//   doi: string;
+//   claim: string;
+//   evidence: string;
+//   rating: number;
+// }
+
+// const BrowsePage = () => {
+//   // Initialize articles as an empty array
+//   const [articles, setArticles] = useState<Article[]>([]); 
+//   const [searchTerm, setSearchTerm] = useState('');
+
+//   useEffect(() => {
+//     const fetchArticles = async () => {
+//       try {
+//         const response = await fetch('http://localhost:8082/articles');
+//         const data = await response.json();
+
+//         // Ensure the data is an array
+//         if (Array.isArray(data)) {
+//           setArticles(data);
+//         } else {
+//           console.error('Unexpected API response:', data);
+//         }
+//       } catch (error) {
+//         console.error('Error fetching articles:', error);
+//       }
+//     };
+
+//     fetchArticles();
+//   }, []);
+
+//   const searchArticles = async (title: string) => {
+//     try {
+//       const response = await fetch(`http://localhost:8082/articles/search?title=${title}`);
+//       const data = await response.json();
+
+//       // Ensure the data is an array
+//       if (Array.isArray(data)) {
+//         setArticles(data);
+//       } else {
+//         console.error('Unexpected API response:', data);
+//       }
+//     } catch (error) {
+//       console.error('Error searching articles:', error);
+//     }
+//   };
+
+//   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const value = e.target.value;
+//     setSearchTerm(value);
+
+//     if (value.length > 0) {
+//       searchArticles(value);
+//     } else {
+//       // Fetch all articles if search input is cleared
+//       const fetchArticles = async () => {
+//         try {
+//           const response = await fetch('http://localhost:8082/articles');
+//           const data = await response.json();
+
+//           // Ensure the data is an array
+//           if (Array.isArray(data)) {
+//             setArticles(data);
+//           }
+//         } catch (error) {
+//           console.error('Error fetching articles:', error);
+//         }
+//       };
+
+//       fetchArticles();
+//     }
+//   };
+
+//   return (
+//     <div className="mt-16">
+//       <div className="flex justify-center items-center space-x-4 xl:w-3/4 mx-auto">
+//         <span className="font-bold text-xl flex-shrink-0 whitespace-nowrap">
+//           Browse articles
+//         </span>
+
+//         <input
+//           type="search"
+//           value={searchTerm}
+//           onChange={handleSearchChange}
+//           className="block w-full md:w-2/3 lg:w-1/2 xl:w-3/4 rounded-full border border-solid border-neutral-300 bg-white px-6 py-3 text-base font-normal leading-6 text-neutral-700 outline-none shadow-md transition duration-200 ease-in-out focus:z-[3] focus:border-blue-500 focus:ring focus:ring-blue-300 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-blue-500"
+//           placeholder="Search for an article by title..."
+//           aria-label="Search"
+//         />
+//       </div>
+
+//       <div className="mt-16">
+//         <div className="px-4 md:px-8">
+//           <table className="min-w-full table-auto border border-blue-300">
+//             <thead>
+//               <tr className="bg-gray-100">
+//                 <th className="border px-4 py-2 text-left font-bold">Title</th>
+//                 <th className="border px-4 py-2 text-left font-bold">Authors</th>
+//                 <th className="border px-4 py-2 text-left font-bold">Source</th>
+//                 <th className="border px-4 py-2 text-left font-bold">Year</th>
+//                 <th className="border px-4 py-2 text-left font-bold">DOI</th>
+//                 <th className="border px-4 py-2 text-left font-bold">Claim</th>
+//                 <th className="border px-4 py-2 text-left font-bold">Evidence</th>
+//                 <th className="border px-4 py-2 text-left font-bold">Rating</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {/* Conditionally render the article rows */}
+//               {articles.length > 0 ? (
+//                 articles.map((article) => (
+//                   <tr key={article._id}>
+//                     <td className="border px-4 py-2">
+//                       <Link href={`/browse/${article._id}`} className="text-blue-600 hover:underline">
+//                         {article.title}
+//                       </Link>
+//                     </td>
+//                     <td className="border px-4 py-2">{article.authors.join(', ')}</td>
+//                     <td className="border px-4 py-2">{article.source}</td>
+//                     <td className="border px-4 py-2">{article.publicationYear}</td>
+//                     <td className="border px-4 py-2">{article.doi}</td>
+//                     <td className="border px-4 py-2">{article.claim || 'N/A'}</td>
+//                     <td className="border px-4 py-2">{article.evidence || 'N/A'}</td>
+//                     <td className="border px-4 py-2">{article.rating}/5</td>
+//                   </tr>
+//                 ))
+//               ) : (
+//                 <tr>
+//                   <td colSpan={8} className="text-center">No articles found.</td>
+//                 </tr>
+//               )}
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default BrowsePage;
+
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+interface Article {
+  _id: string;
+  title: string;
+  authors: string[];
+  source: string;
+  publicationYear: string;
+  doi: string;
+  claim: string;
+  evidence: string;
+  rating: number;
+}
+
+const BrowsePage = () => {
+  const [articles, setArticles] = useState<Article[]>([]); 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('http://localhost:8082/articles');
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          setArticles(data);
+        } else {
+          console.error('Unexpected API response:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const searchArticles = async (title: string) => {
+    try {
+      const response = await fetch(`http://localhost:8082/articles/search?title=${title}`);
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setArticles(data);
+      } else {
+        console.error('Unexpected API response:', data);
+      }
+    } catch (error) {
+      console.error('Error searching articles:', error);
+    }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      searchArticles(searchTerm);  // Trigger search when Enter is pressed
+    }
+  };
+
   return (
     <div className="mt-16">
       <div className="flex justify-center items-center space-x-4 xl:w-3/4 mx-auto">
@@ -8,51 +221,58 @@ const page = () => {
           Browse articles
         </span>
 
+        {/* Search input field */}
         <input
           type="search"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          onKeyDown={handleKeyDown}  // Detect Enter key press
           className="block w-full md:w-2/3 lg:w-1/2 xl:w-3/4 rounded-full border border-solid border-neutral-300 bg-white px-6 py-3 text-base font-normal leading-6 text-neutral-700 outline-none shadow-md transition duration-200 ease-in-out focus:z-[3] focus:border-blue-500 focus:ring focus:ring-blue-300 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-blue-500"
-          placeholder="Search for an article..."
+          placeholder="Search for an article by title..."
           aria-label="Search"
-          aria-describedby="button-addon2"
         />
-
-        <span
-          className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-sm font-normal text-neutral-700 dark:text-neutral-200"
-          id="basic-addon2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="h-5 w-5"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </span>
       </div>
+
       <div className="mt-16">
         <div className="px-4 md:px-8">
           <table className="min-w-full table-auto border border-blue-300">
             <thead>
               <tr className="bg-gray-100">
                 <th className="border px-4 py-2 text-left font-bold">Title</th>
-                <th className="border px-4 py-2 text-left font-bold">
-                  Authors
-                </th>
+                <th className="border px-4 py-2 text-left font-bold">Authors</th>
                 <th className="border px-4 py-2 text-left font-bold">Source</th>
                 <th className="border px-4 py-2 text-left font-bold">Year</th>
                 <th className="border px-4 py-2 text-left font-bold">DOI</th>
                 <th className="border px-4 py-2 text-left font-bold">Claim</th>
-                <th className="border px-4 py-2 text-left font-bold">
-                  Evidence
-                </th>
+                <th className="border px-4 py-2 text-left font-bold">Evidence</th>
+                <th className="border px-4 py-2 text-left font-bold">Rating</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {/* Render the article rows based on search results */}
+              {articles.length > 0 ? (
+                articles.map((article) => (
+                  <tr key={article._id}>
+                    <td className="border px-4 py-2">
+                      <Link href={`/browse/${article._id}`} className="text-blue-600 hover:underline">
+                        {article.title}
+                      </Link>
+                    </td>
+                    <td className="border px-4 py-2">{article.authors.join(', ')}</td>
+                    <td className="border px-4 py-2">{article.source}</td>
+                    <td className="border px-4 py-2">{article.publicationYear}</td>
+                    <td className="border px-4 py-2">{article.doi}</td>
+                    <td className="border px-4 py-2">{article.claim || 'N/A'}</td>
+                    <td className="border px-4 py-2">{article.evidence || 'N/A'}</td>
+                    <td className="border px-4 py-2">{article.rating}/5</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={8} className="text-center">No articles found.</td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
       </div>
@@ -60,4 +280,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default BrowsePage;

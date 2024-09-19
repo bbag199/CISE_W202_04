@@ -33,7 +33,6 @@ const SubmitArticlePage = () => {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Convert authors from string to array
     const authorsArray = article.authors.split(',').map((author) => author.trim());
 
     const articleToSubmit = {

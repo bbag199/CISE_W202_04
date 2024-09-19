@@ -6,7 +6,7 @@ import { CreateArticleDto } from './submit-article.dto';
 
 @Injectable()
 export class ArticlesService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
+    constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
 
   test(): string {
     return 'article route testing';
@@ -23,7 +23,7 @@ export class ArticlesService {
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     return await this.articleModel.create(createArticleDto); 
   }
-  
+
   async update(id: string, createArticleDto: CreateArticleDto): Promise<Article> {
     return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
   }
@@ -31,5 +31,14 @@ export class ArticlesService {
   async delete(id: string): Promise<Article> {
     const deletedArticle = await this.articleModel.findByIdAndDelete(id).exec();
     return deletedArticle;
+  }
+
+  async searchByTitle(title: string): Promise<Article[]> {
+    try {
+      return await this.articleModel.find({ title: { $regex: title, $options: 'i' } }).exec();
+    } catch (error) {
+      console.error('Error in searchByTitle:', error);
+      throw new Error('Failed to search articles by title');
+    }
   }
 }
