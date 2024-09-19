@@ -41,4 +41,8 @@ export class ArticlesService {
       throw new Error('Failed to search articles by title');
     }
   }
+
+  async findByStatus(status: string): Promise<Article[]> {
+    return this.articleModel.find({ status: "Unmoderated" }).exec();
+  }
 }

@@ -41,4 +41,9 @@ export class ArticlesController {
   async searchByTitle(@Query('title') title: string) {
     return this.articlesService.searchByTitle(title);
   }
+
+  @Get('status/unmoderated')
+async findUnmoderatedArticles(): Promise<Article[]> {
+  return this.articlesService.findByStatus('Unmoderated');
+}
 }
