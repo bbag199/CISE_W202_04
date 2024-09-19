@@ -1,7 +1,6 @@
 'use client'; // Mark this component as a client component
 
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Use this for client-side navigation
 
 interface Article {
   title: string;
@@ -22,8 +21,8 @@ const DefaultEmptyArticle: Article = {
 };
 
 const SubmitArticlePage = () => {
-  const router = useRouter();
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null); // Add a success message state
 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -32,7 +31,6 @@ const SubmitArticlePage = () => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
    
     const authorsArray = article.authors.split(',').map((author) => author.trim());
 
@@ -53,8 +51,8 @@ const SubmitArticlePage = () => {
 
       if (response.ok) {
         console.log('Article submitted successfully');
-        setArticle(DefaultEmptyArticle); 
-        router.push('/'); 
+        setArticle(DefaultEmptyArticle); // Clear the form
+        setSuccessMessage('Article submitted successfully!'); // Set success message
       } else {
         console.error('Failed to submit article');
       }
@@ -71,11 +69,8 @@ const SubmitArticlePage = () => {
         <label htmlFor="title" className="block mb-2">Title:</label>
         <input type="text" id="title" name="title" value={article.title} onChange={onChange} required className="mb-4 p-2 w-full"/>
 
-        
         <label htmlFor="authors" className="block mb-2">Authors:</label>
         <input type="text" id="authors" name="authors" value={article.authors} onChange={onChange} required className="mb-4 p-2 w-full"/>
-
-
 
         <label htmlFor="source" className="block mb-2">Source:</label>
         <input type="text" id="source" name="source" value={article.source} onChange={onChange} required className="mb-4 p-2 w-full"/>
@@ -97,6 +92,10 @@ const SubmitArticlePage = () => {
         </select>
 
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Submit Article</button>
+
+        {successMessage && (
+          <p className="mt-4 text-green-600">{successMessage}</p> // Display success message if submission succeeds
+        )}
       </form>
     </div>
   );
