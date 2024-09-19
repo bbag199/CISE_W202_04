@@ -21,9 +21,9 @@ export class ArticlesService {
   }
 
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
-    return await this.articleModel.create(createArticleDto);
+    return await this.articleModel.create(createArticleDto); 
   }
-
+  
   async update(id: string, createArticleDto: CreateArticleDto): Promise<Article> {
     return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
   }

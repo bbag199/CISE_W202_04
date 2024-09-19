@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsArray, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsArray, IsOptional, IsNumber, Min, Max } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
@@ -20,4 +20,10 @@ export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
   doi: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  rating?: number;
 }
