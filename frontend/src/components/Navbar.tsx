@@ -24,7 +24,10 @@ const Navbar = () => {
                     <Link href="/pages/submit">Submit</Link>
                   </li>
                   <li>
-                    <Link href="/pages/review">Review</Link>
+                    <Link href="/pages/moderate">Moderate</Link>
+                  </li>
+                  <li>
+                    <Link href="/pages/analyse">Analyse</Link>
                   </li>
                   <li>
                     <Link href="/pages/login">Login</Link>
