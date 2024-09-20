@@ -46,8 +46,4 @@ export class ArticlesService {
     return this.articleModel.find({ status: statusToSearch }).exec();
   }
 
-  // !! temporary test function
-  async findUnmoderrated(): Promise<Article[]> {
-    return this.articleModel.find({ status: 'Unmoderated' }).exec();
-  }
 }
