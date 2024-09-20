@@ -32,7 +32,6 @@ const ModeratePage = () => {
     try {
       setLoadingArticle(true);
       const port = 8082; // !! should use port from .env
-      // http://localhost:8082/articles/status/unmoderated
       const response = await fetch(`http://localhost:${port}/articles/status/unmoderated`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -55,16 +54,6 @@ const ModeratePage = () => {
     }
   };
 
-  // Modify article state so it becomes 'Rejected'
-  const onReject = () => {
-    setLoadingSubmit(true);
-
-    console.log("Script One is running");
-    // Add your script logic here
-
-    setLoadingSubmit(false);
-  };
-
   // Modify article state so it becomes 'Moderated'
   const onSubmit = async () => {
     setLoadingSubmit(true);
@@ -79,7 +68,7 @@ const ModeratePage = () => {
         },
         body: JSON.stringify({
           ...displayedArticle,
-          status: 'Moderated', // Update the status or other fields here
+          status: 'Moderated', // Update the status
         }),
       });
 
@@ -96,18 +85,37 @@ const ModeratePage = () => {
     }
   };
 
-  // const article : Article = {
-  //   _id: "1",
-  //   title: "An experimental evaluation of test driven development vs. test-last development with industry professionals",
-  //   authors: "Munir, H., Wnuk, K., Petersen, K., Moayyed, M.",
-  //   source: "EASE",
-  //   publicationYear: "2014",
-  //   doi: "https://doi.org/10.1145/2601248.2601267",
-  //   rating: 0,
-  //   claim: "",
-  //   evidence: "",
-  //   status: "unmoderated"
-  // }
+  // Modify article state so it becomes 'Rejected'
+  const onReject = async () => {
+    setLoadingSubmit(true);
+
+    console.log("Rejecting article..");
+
+    try {
+      const response = await fetch(`http://localhost:8082/articles/${displayedArticle._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...displayedArticle,
+          status: 'Rejected', // Update the status
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Article updated successfully');
+        await fetchArticles(); // Refetch the next article
+      } else {
+        console.error('Failed to update article');
+      }
+    } catch (error) {
+      console.error('Error updating article:', error);
+    } finally {
+      setLoadingSubmit(false);
+    }
+  };
+
   
   if (loadingArticle) {
     return <p>Loading...</p>; // Show loading state while fetching
@@ -130,6 +138,7 @@ const ModeratePage = () => {
         <h3>
           <a href={displayedArticle.doi} target="_blank" rel="noopener noreferrer">{displayedArticle.doi}</a>
         </h3>
+        <h4>Article ID: {displayedArticle._id}</h4>
       </div>
 
       <br />
@@ -137,6 +146,7 @@ const ModeratePage = () => {
       <div className="flex space-x-4">
         <button 
           onClick={onReject}
+          // !! Disabled button style is pretty ugly
           className={`px-4 py-2 font-semibold rounded ${
             loadingSubmit
               ? 'bg-red-300 text-red-700 cursor-not-allowed'  // Disabled styles
