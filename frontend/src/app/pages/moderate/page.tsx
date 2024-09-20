@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 
 // !! should use same article interface across pages?
 interface Article {
+  _id: string;
   title: string;
   authors: string;
   source: string;
@@ -20,10 +21,10 @@ const ModeratePage = () => {
   const [loadingArticle, setLoadingArticle] = useState<boolean>(true);
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
   
-
+  // Get unmoderated articles when the page loads
   useEffect(() => {
     setLoadingArticle(true);
-    // Function to fetch a single unmoderated article
+    // Function to fetch unmoderated articles
     const fetchArticles = async () => {
       try {
         const port = 8082; // !! should use port from .env
@@ -53,6 +54,7 @@ const ModeratePage = () => {
     fetchArticles();
   }, []);
 
+  // Modify article state so it becomes 'Rejected'
   const onReject = () => {
     setLoadingSubmit(true);
 
@@ -62,33 +64,35 @@ const ModeratePage = () => {
     setLoadingSubmit(false);
   };
 
+  // Modify article state so it becomes 'Moderated'
   const onSubmit = async () => {
     setLoadingSubmit(true);
 
-    console.log("Script Two is running");
-    // Add your script logic here
+    console.log("Submitting article..");
 
     try {
-      const response = await fetch('http://localhost:8082/articles', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:8082/articles/${displayedArticle._id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(articleToSubmit),
+        body: JSON.stringify({
+          ...displayedArticle,
+          status: 'Moderated', // Update the status or other fields here
+        }),
       });
 
       if (response.ok) {
-        console.log('Article submitted successfully');
-        setArticle(DefaultEmptyArticle); // Clear the form
-        setSuccessMessage('Article submitted successfully!'); // Set success message
+        console.log('Article updated successfully');
+        // Optionally fetch updated articles here or update state
       } else {
-        console.error('Failed to submit article');
+        console.error('Failed to update article');
       }
     } catch (error) {
-      console.error('Error submitting article:', error);
+      console.error('Error updating article:', error);
+    } finally {
+      setLoadingSubmit(false);
     }
-
-    setLoadingSubmit(false);
   };
 
   // const article : Article = {
@@ -111,8 +115,6 @@ const ModeratePage = () => {
   if (!articles || !displayedArticle) {
     return <p>No article found.</p>; // Show message if no article is found
   }
-
-
 
   return (
     <>
