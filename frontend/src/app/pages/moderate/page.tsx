@@ -23,36 +23,37 @@ const ModeratePage = () => {
   
   // Get unmoderated articles when the page loads
   useEffect(() => {
-    setLoadingArticle(true);
-    // Function to fetch unmoderated articles
-    const fetchArticles = async () => {
-      try {
-        const port = 8082; // !! should use port from .env
-        // http://localhost:8082/articles/status/unmoderated
-        const response = await fetch(`http://localhost:${port}/articles/status/unmoderated`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        const articleData: Article[] = await response.json(); // Use the Article type for the data
-        setArticles(articleData); // Store the article
-
-        // Set displayedArticle to the first article if the array has at least one article
-        if (articleData.length > 0) {
-          setDisplayedArticle(articleData[0]);
-        } else {
-          setDisplayedArticle(null); // No articles to display
-        }
-
-      } catch (error) {
-        console.error('Failed to fetch article:', error); 
-      }  finally {
-        setLoadingArticle(false);
-      }
-    };
-
     fetchArticles();
   }, []);
+
+
+  // Fetch unmoderated articles
+  const fetchArticles = async () => {
+    try {
+      setLoadingArticle(true);
+      const port = 8082; // !! should use port from .env
+      // http://localhost:8082/articles/status/unmoderated
+      const response = await fetch(`http://localhost:${port}/articles/status/unmoderated`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const articleData: Article[] = await response.json(); // Use the Article type for the data
+      setArticles(articleData); // Store the article
+
+      // Set displayedArticle to the first article if the array has at least one article
+      if (articleData.length > 0) {
+        setDisplayedArticle(articleData[0]);
+      } else {
+        setDisplayedArticle(null); // No articles to display
+      }
+
+    } catch (error) {
+      console.error('Failed to fetch article:', error); 
+    }  finally {
+      setLoadingArticle(false);
+    }
+  };
 
   // Modify article state so it becomes 'Rejected'
   const onReject = () => {
@@ -84,7 +85,7 @@ const ModeratePage = () => {
 
       if (response.ok) {
         console.log('Article updated successfully');
-        // Optionally fetch updated articles here or update state
+        await fetchArticles(); // Refetch the next article
       } else {
         console.error('Failed to update article');
       }
@@ -136,14 +137,22 @@ const ModeratePage = () => {
       <div className="flex space-x-4">
         <button 
           onClick={onReject}
-          className="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600"
+          className={`px-4 py-2 font-semibold rounded ${
+            loadingSubmit
+              ? 'bg-red-300 text-red-700 cursor-not-allowed'  // Disabled styles
+              : 'bg-red-500 text-white hover:bg-red-600'      // Active styles
+          }`}
           disabled={loadingSubmit}
         >
           Reject
         </button>
         <button 
           onClick={onSubmit}
-          className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600"
+          className={`px-4 py-2 font-semibold rounded ${
+            loadingSubmit
+              ? 'bg-blue-300 text-blue-700 cursor-not-allowed'  // Disabled styles
+              : 'bg-blue-500 text-white hover:bg-blue-600'      // Active styles
+          }`}
           disabled={loadingSubmit}
         >
           Submit for Analysis
