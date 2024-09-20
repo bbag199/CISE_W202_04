@@ -42,7 +42,12 @@ export class ArticlesService {
     }
   }
 
-  async findByStatus(status: string): Promise<Article[]> {
-    return this.articleModel.find({ status: "Unmoderated" }).exec();
+  async findByStatus(statusToSearch: string): Promise<Article[]> {
+    return this.articleModel.find({ status: statusToSearch }).exec();
+  }
+
+  // !! temporary test function
+  async findUnmoderrated(): Promise<Article[]> {
+    return this.articleModel.find({ status: 'Unmoderated' }).exec();
   }
 }
