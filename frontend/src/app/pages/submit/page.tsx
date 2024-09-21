@@ -1,7 +1,6 @@
 'use client'; // Mark this component as a client component
 
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Use this for client-side navigation
 
 interface Article {
   title: string;
@@ -23,7 +22,6 @@ const DefaultEmptyArticle: Article = {
 
 
 const SubmitArticlePage = () => {
-  const router = useRouter();
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
 
   const handleAuthorChange = (index: number, newValue: string) => {
@@ -73,8 +71,8 @@ const SubmitArticlePage = () => {
 
       if (response.ok) {
         console.log('Article submitted successfully');
-        setArticle(DefaultEmptyArticle); 
-        router.push('/'); 
+        setArticle(DefaultEmptyArticle); // Clear the form
+        setSuccessMessage('Article submitted successfully!'); // Set success message
       } else {
         console.error('Failed to submit article');
       }
