@@ -23,6 +23,7 @@ const DefaultEmptyArticle: Article = {
 
 const SubmitArticlePage = () => {
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleAuthorChange = (index: number, newValue: string) => {
     const newAuthors = [...article.authors];
