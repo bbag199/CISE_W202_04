@@ -14,7 +14,7 @@ interface Article {
 
 const DefaultEmptyArticle: Article = {
   title: '',
-  authors: [''],  // Start with one empty string for one author input
+  authors: [''],  
   source: '',
   publicationYear: '',
   doi: '',
