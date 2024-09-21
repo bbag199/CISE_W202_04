@@ -163,6 +163,7 @@ interface Article {
   claim: string;
   evidence: string;
   rating: number;
+  status: string;
 }
 
 const BrowsePage = () => {
@@ -246,6 +247,7 @@ const BrowsePage = () => {
                 <th className="border px-4 py-2 text-left font-bold">Claim</th>
                 <th className="border px-4 py-2 text-left font-bold">Evidence</th>
                 <th className="border px-4 py-2 text-left font-bold">Rating</th>
+                <th className="border px-4 py-2 text-left font-bold">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -265,6 +267,7 @@ const BrowsePage = () => {
                     <td className="border px-4 py-2">{article.claim || 'N/A'}</td>
                     <td className="border px-4 py-2">{article.evidence || 'N/A'}</td>
                     <td className="border px-4 py-2">{article.rating}/5</td>
+                    <td className="border px-4 py-2">{article.status || 'N/A'}</td>
                   </tr>
                 ))
               ) : (

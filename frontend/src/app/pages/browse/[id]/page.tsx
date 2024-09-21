@@ -13,6 +13,7 @@ interface Article {
   claim: string;
   evidence: string;
   rating: number;
+  status: string;
 }
 
 const ArticleDetailsPage = () => {
@@ -62,6 +63,9 @@ const ArticleDetailsPage = () => {
       </p>
       <p>
         <strong>Rating:</strong> {article.rating}/5
+      </p>
+      <p>
+        <strong>Status:</strong> {article.status || "N/A"}
       </p>
     </div>
   );
