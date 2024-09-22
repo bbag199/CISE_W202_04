@@ -43,7 +43,7 @@ export class ArticlesController {
   }
 
   @Get('status/unmoderated')
-async findUnmoderatedArticles(): Promise<Article[]> {
-  return this.articlesService.findByStatus('Unmoderated');
+  async findUnmoderatedArticles(): Promise<Article[]> {
+    return this.articlesService.findByStatus('Unmoderated');
 }
 }
