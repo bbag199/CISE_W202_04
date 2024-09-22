@@ -258,8 +258,6 @@ const BrowsePage = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        // const port = 8082; // !! should use port from .env
-        // const response = await fetch(`http://localhost:${port}/articles/status/unmoderated`);
         const response = await fetch('http://localhost:8082/articles/status/unmoderated');
         const data = await response.json();
 

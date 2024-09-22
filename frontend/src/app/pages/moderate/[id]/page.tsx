@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useParams, useRouter } from 'next/navigation';
 
 // !! should use same article interface across pages?
 interface Article {
@@ -18,29 +18,40 @@ interface Article {
 const ModerateArticlePage = () => {
   
   const router = useRouter();
-  const { id } = router.query; // Get the article ID from the URL
-  // const [articles, setArticles] = useState<Article[] | null>(null);
+  const { id } = useParams(); // Get the article ID from the URL
   const [displayedArticle, setDisplayedArticle] = useState<Article | null>(null); // Store the first article
   const [loadingArticle, setLoadingArticle] = useState<boolean>(true);
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
   
-  // Fetch the article based on the ID from the URL
-  useEffect(() => {
-    if (id) {
-      fetchArticle(id as string);
-    }
-  }, [id]);
+ 	// Fetch the article based on the ID from the URL
+	useEffect(() => {
+		if (id) {
+			fetchArticle(id);
+		}
+	}, [id]);
 
-  // // Get unmoderated articles when the page loads
+
   // useEffect(() => {
-  //   fetchArticles();
-  // }, []);
+  //   const fetchArticle = async () => {
+  //     try {
+  //       const response = await fetch(`http://localhost:8082/articles/${id}`);
+  //       const data = await response.json();
+  //       setArticle(data);
+  //     } catch (error) {
+  //       console.error("Error fetching article:", error);
+  //     }
+  //   };
+
+  //   if (id) {
+  //     fetchArticle();
+  //   }
+  // }, [id]);
 
   // Fetch a specific article by ID
-  const fetchArticle = async (articleId: string) => {
+  const fetchArticle = async (id: string) => {
     try {
       setLoadingArticle(true);
-      const response = await fetch(`http://localhost:8082/articles/${articleId}`);
+      const response = await fetch(`http://localhost:8082/articles/${id}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -50,7 +61,7 @@ const ModerateArticlePage = () => {
         setDisplayedArticle(articleData); // Store the article
       } else {
         alert('This article is not available for moderation.');
-        router.push('/'); // Redirect if not unmoderated
+        router.push('/pages/moderate'); // Redirect if not unmoderated
       }
     } catch (error) {
       console.error('Failed to fetch article:', error);
@@ -58,33 +69,6 @@ const ModerateArticlePage = () => {
       setLoadingArticle(false);
     }
   };
-
-  // // Fetch unmoderated articles
-  // const fetchArticles = async () => {
-  //   try {
-  //     setLoadingArticle(true);
-  //     const port = 8082; // !! should use port from .env
-  //     const response = await fetch(`http://localhost:${port}/articles/status/unmoderated`);
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-      
-  //     const articleData: Article[] = await response.json(); // Use the Article type for the data
-  //     setArticles(articleData); // Store the article
-
-  //     // Set displayedArticle to the first article if the array has at least one article
-  //     if (articleData.length > 0) {
-  //       setDisplayedArticle(articleData[0]);
-  //     } else {
-  //       setDisplayedArticle(null); // No articles to display
-  //     }
-
-  //   } catch (error) {
-  //     console.error('Failed to fetch article:', error); 
-  //   }  finally {
-  //     setLoadingArticle(false);
-  //   }
-  // };
 
   // Modify article state to 'Moderated'
   const onSubmit = async () => {
@@ -103,8 +87,7 @@ const ModerateArticlePage = () => {
 
       if (response.ok) {
         console.log('Article updated successfully');
-        // !! change this
-        router.push('/'); // Redirect after successful moderation
+        router.push('/pages/moderate'); // Redirect after successful moderation
       } else {
         console.error('Failed to update article');
       }
@@ -143,38 +126,6 @@ const ModerateArticlePage = () => {
     }
   };
 
-  // // Modify article state so it becomes 'Rejected'
-  // const onReject = async () => {
-  //   setLoadingSubmit(true);
-
-  //   console.log("Rejecting article..");
-
-  //   try {
-  //     const response = await fetch(`http://localhost:8082/articles/${displayedArticle._id}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         ...displayedArticle,
-  //         status: 'Rejected', // Update the status
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('Article updated successfully');
-  //       await fetchArticles(); // Refetch the next article
-  //     } else {
-  //       console.error('Failed to update article');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating article:', error);
-  //   } finally {
-  //     setLoadingSubmit(false);
-  //   }
-  // };
-
-  
   if (loadingArticle) {
     return <p>Loading...</p>; // Show loading state while fetching
   }
