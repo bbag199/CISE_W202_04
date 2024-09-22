@@ -47,7 +47,7 @@ const ModerateArticlePage = () => {
       if (articleData && articleData.status === 'Unmoderated') {
         setDisplayedArticle(articleData); // Store the article
       } else {
-				// alert('This article is not available for moderation.');
+				alert('This article is not available for moderation.');
 				router.push('/pages/moderate'); // Redirect if not unmoderated
       }
     } catch (error) {
