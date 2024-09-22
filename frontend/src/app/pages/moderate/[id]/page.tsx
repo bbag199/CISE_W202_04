@@ -23,29 +23,16 @@ const ModerateArticlePage = () => {
   const [loadingArticle, setLoadingArticle] = useState<boolean>(true);
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
   
+	const articleId = Array.isArray(id) ? id[0] : id; // Ensure `articleId` is a string
+
+
  	// Fetch the article based on the ID from the URL
 	useEffect(() => {
-		if (id) {
-			fetchArticle(id);
+		if (articleId) {
+			fetchArticle(articleId);
 		}
-	}, [id]);
+	}, [articleId]);
 
-
-  // useEffect(() => {
-  //   const fetchArticle = async () => {
-  //     try {
-  //       const response = await fetch(`http://localhost:8082/articles/${id}`);
-  //       const data = await response.json();
-  //       setArticle(data);
-  //     } catch (error) {
-  //       console.error("Error fetching article:", error);
-  //     }
-  //   };
-
-  //   if (id) {
-  //     fetchArticle();
-  //   }
-  // }, [id]);
 
   // Fetch a specific article by ID
   const fetchArticle = async (id: string) => {
@@ -60,8 +47,8 @@ const ModerateArticlePage = () => {
       if (articleData && articleData.status === 'Unmoderated') {
         setDisplayedArticle(articleData); // Store the article
       } else {
-        alert('This article is not available for moderation.');
-        router.push('/pages/moderate'); // Redirect if not unmoderated
+				// alert('This article is not available for moderation.');
+				router.push('/pages/moderate'); // Redirect if not unmoderated
       }
     } catch (error) {
       console.error('Failed to fetch article:', error);
