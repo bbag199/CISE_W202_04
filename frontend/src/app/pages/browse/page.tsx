@@ -256,7 +256,7 @@ const BrowsePage = () => {
                 articles.map((article) => (
                   <tr key={article._id}>
                     <td className="border px-4 py-2">
-                      <Link href={`/browse/${article._id}`} className="text-blue-600 hover:underline">
+                      <Link href={`/pages/browse/${article._id}`} className="text-blue-600 hover:underline">
                         {article.title}
                       </Link>
                     </td>
