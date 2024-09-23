@@ -20,6 +20,17 @@ export class ArticlesService {
     return await this.articleModel.findById(id).exec();
   }
 
+  // possible findOne code to only allow access to certain article statuses -Cam
+  //
+  // async findOne(id: string, context: 'moderate' | 'browse' = 'browse'): Promise<Article | null> {
+  //   const article = await this.articleModel.findById(id).exec();
+  //   if (context === 'moderate' && article && article.status !== 'Unmoderated') {
+  //     return null; // Return null if the article is not unmoderated in moderation context
+  //   }
+  //    // could add similar functionality for the browse & analyse contexts
+  //   return article; // Return the article for all other contexts
+  // }
+
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     return await this.articleModel.create(createArticleDto); 
   }
