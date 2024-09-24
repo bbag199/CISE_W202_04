@@ -25,11 +25,9 @@ function AuthPage() {
           console.error('Login Failed', data.message);
           // Optionally update UI with error message
       }
-  };
+    };
   
-  
-
-  const handleSignup = async (event) => {
+    const handleSignup = async (event) => {
     event.preventDefault();
     const response = await fetch('http://localhost:8082/auth/signup', {
         method: 'POST',
@@ -48,16 +46,18 @@ function AuthPage() {
     }
 };
 
-
     const toggleForm = () => {
         setIsLogin(!isLogin);  // Toggle between forms
     };
 
     return (
-        <div>
-            <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+        <div className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
+            <h1 className="text-2xl font-bold text-gray-700 mb-6">
+                {isLogin ? 'Login' : 'Sign Up'}
+            </h1>
             <form onSubmit={isLogin ? handleLogin : handleSignup}>
                 <input
+                    className="w-full p-2 border border-gray-300 rounded mt-2"
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -66,6 +66,7 @@ function AuthPage() {
                 />
                 {!isLogin && (
                     <input
+                        className="w-full p-2 border border-gray-300 rounded mt-2"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -74,15 +75,24 @@ function AuthPage() {
                     />
                 )}
                 <input
+                    className="w-full p-2 border border-gray-300 rounded mt-2"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     required
                 />
-                <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
+                <button
+                    className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded mt-4"
+                    type="submit"
+                >
+                    {isLogin ? 'Login' : 'Sign Up'}
+                </button>
             </form>
-            <button onClick={toggleForm}>
+            <button
+                className="text-sm text-blue-500 hover:text-blue-600 mt-4"
+                onClick={toggleForm}
+            >
                 {isLogin ? 'Need to create an account?' : 'Already have an account?'}
             </button>
         </div>
