@@ -10,7 +10,7 @@ function AuthPage() {
 
     const handleLogin = async (event) => {
       event.preventDefault();
-      const response = await fetch('http://localhost:8082/users', {
+      const response = await fetch('http://localhost:8082/auth/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -20,17 +20,18 @@ function AuthPage() {
       const data = await response.json();
       if (response.ok) {
           console.log('Login Successful', data);
-          // Testing
+          // Redirect or manage session
       } else {
           console.error('Login Failed', data.message);
-          // Testing
+          // Optionally update UI with error message
       }
   };
+  
   
 
   const handleSignup = async (event) => {
     event.preventDefault();
-    const response = await fetch('http://localhost:8082/users', {
+    const response = await fetch('http://localhost:8082/auth/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -46,6 +47,7 @@ function AuthPage() {
         // Optionally update UI with error message
     }
 };
+
 
     const toggleForm = () => {
         setIsLogin(!isLogin);  // Toggle between forms
