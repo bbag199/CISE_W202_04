@@ -10,7 +10,7 @@ function AuthPage() {
 
     const handleLogin = async (event) => {
       event.preventDefault();
-      const response = await fetch('http://localhost:8082/api/auth/login', {
+      const response = await fetch('http://localhost:8082/users', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function AuthPage() {
 
   const handleSignup = async (event) => {
     event.preventDefault();
-    const response = await fetch('http://localhost:8082/api/auth/signup', {
+    const response = await fetch('http://localhost:8082/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
