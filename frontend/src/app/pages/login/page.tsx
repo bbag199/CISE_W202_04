@@ -3,11 +3,15 @@
 import React, { useState } from 'react';
 
 
+
 function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);  // Toggle between login and signup
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+   
+
+
 
     const handleLogin = async (event) => {
       event.preventDefault();
@@ -21,6 +25,7 @@ function AuthPage() {
       const data = await response.json();
       if (response.ok) {
           console.log('Login Successful', data);
+          
           // Redirect or manage session
 
 
@@ -28,7 +33,7 @@ function AuthPage() {
           console.error('Login Failed', data.message);
           // Optionally update UI with error message
 
-          
+
       }
     };
   
