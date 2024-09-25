@@ -12,6 +12,9 @@ interface Article {
   doi: string;
   rating: number;
   status: string;  
+  //claim and evidence
+  claim: string;
+  evidence: string;
 }
 
 const AnalyzePage = () => {
@@ -21,6 +24,10 @@ const AnalyzePage = () => {
   const [displayedArticle, setDisplayedArticle] = useState<Article | null>(null); // Store the first article
   const [loadingArticle, setLoadingArticle] = useState<boolean>(true);
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+
+  //state for claim and evidence
+  const [claim, setClaim] = useState<string>('');
+  const [evidence, setEvidence] = useState<string>('');
 
   const articleId = Array.isArray(id) ? id[0] : id;
 
@@ -41,8 +48,11 @@ const AnalyzePage = () => {
       const articleData: Article = await response.json();
       if (articleData && articleData.status === 'Moderated') {
         setDisplayedArticle(articleData);
+        //pre-fill claim and evidence
+        setClaim(articleData.claim || '');
+        setEvidence(articleData.evidence || '');
       } else {
-        alert('This article is not available for moderation');
+        alert('This article is not available for analyze');
         router.push('/pages/analyze');
       }
     } catch (error) {
@@ -63,44 +73,19 @@ const AnalyzePage = () => {
         body: JSON.stringify({
           ...displayedArticle,
           status: 'Analyzed',
+          claim: claim,
+          evidence: evidence,
         }),
       });
 
       if (response.ok) {
         console.log('Article updated successfully');
-        router.push('/pages/analyze');
+        router.push('/pages/analyse');
       } else {
         console.error('Failed to update');
       }
     } catch (error) {
       console.error('Error updating article: ', error);
-    } finally {
-      setLoadingSubmit(false);
-    }
-  };
-
-  const onReject = async () => {
-    setLoadingSubmit(true);
-    try {
-      const response = await fetch(`http://localhost:8082/articles/${displayedArticle!._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ...displayedArticle,
-          status: 'Rejected',
-        }),
-      });
-
-      if (response.ok) {
-        console.log('Article updated successfully');
-        router.push('/');
-      } else {
-        console.error('Failed updating article');
-      } 
-    } catch (error) {
-      console.error('Error updating article:', error);
     } finally {
       setLoadingSubmit(false);
     }
@@ -133,18 +118,7 @@ const AnalyzePage = () => {
       <br />
 
       <div className="flex space-x-4">
-        <button 
-          onClick={onReject}
-          // !! Disabled button style is pretty ugly
-          className={`px-4 py-2 font-semibold rounded ${
-            loadingSubmit
-              ? 'bg-red-300 text-red-700 cursor-not-allowed'  // Disabled styles
-              : 'bg-red-500 text-white hover:bg-red-600'      // Active styles
-          }`}
-          disabled={loadingSubmit}
-        >
-          Reject
-        </button>
+
         <button 
           onClick={onSubmit}
           className={`px-4 py-2 font-semibold rounded ${
@@ -154,7 +128,7 @@ const AnalyzePage = () => {
           }`}
           disabled={loadingSubmit}
         >
-          Submit for Analysis
+          Submit 
         </button>
       </div>
 

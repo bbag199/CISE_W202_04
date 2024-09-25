@@ -68,7 +68,7 @@ const BrowseAnalyze = () => {
                     articles.map((article) => (
                       <tr key={article._id}>
                         <td className="border px-4 py-2">
-                          <Link href={`/pages/moderate/${article._id}`} className="text-blue-600 hover:underline">
+                          <Link href={`/pages/analyse/${article._id}`} className="text-blue-600 hover:underline">
                             {article.title}
                           </Link>
                         </td>
