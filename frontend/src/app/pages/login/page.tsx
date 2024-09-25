@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 
+
 function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);  // Toggle between login and signup
     const [username, setUsername] = useState('');
