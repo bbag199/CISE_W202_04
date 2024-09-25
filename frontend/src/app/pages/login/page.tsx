@@ -22,9 +22,13 @@ function AuthPage() {
       if (response.ok) {
           console.log('Login Successful', data);
           // Redirect or manage session
+
+
       } else {
           console.error('Login Failed', data.message);
           // Optionally update UI with error message
+
+          
       }
     };
   
