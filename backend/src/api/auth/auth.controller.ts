@@ -11,7 +11,7 @@ export class AuthController {
     return this.authService.login(username, password);
   }
 
-  @Post('signup')
+  @Post('signup') 
   async signup(@Body() signupData: { username: string; password: string; email: string }) {
     const { username, password, email } = signupData;
     return this.authService.signup(username, password, email);

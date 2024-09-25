@@ -15,7 +15,7 @@ export class AuthService {
     }
     return null;
   }
-
+  
   // login function (basic session or basic auth)
   async login(username: string, password: string) {
     const user = await this.validateUser(username, password);
