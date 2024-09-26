@@ -61,7 +61,8 @@ function AuthPage() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
+      <div className="max-w-4xl mx-auto p-8 mt-10 bg-white shadow-md rounded-lg">
+
             <h1 className="text-2xl font-bold text-gray-700 mb-6">
                 {isLogin ? 'Login' : 'Sign Up'}
             </h1>
