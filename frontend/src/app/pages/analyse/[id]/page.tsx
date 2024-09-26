@@ -101,7 +101,7 @@ const AnalyzePage = () => {
 
   return (
     <>
-      <p>Moderation Page</p>
+      <p>Analysis Page</p>
 
       <br />
 
@@ -116,6 +116,27 @@ const AnalyzePage = () => {
       </div>
 
       <br />
+
+      {/*Text fields from claims and evd */}
+      <div>
+        <label>Claim</label>
+        <textarea
+          value={claim}
+          onChange={(e) => setClaim(e.target.value)}
+          placeholder="Enter claim"
+          className="border p-2 rounded w-full"
+        />
+      </div>
+
+      <div>
+        <label>Evidence</label>
+        <textarea
+          value={evidence}
+          onChange={(e) => setEvidence(e.target.value)}
+          placeholder="Evidence"
+          className="border p-2 rounded w-full"
+        />
+      </div>
 
       <div className="flex space-x-4">
 
