@@ -31,11 +31,15 @@ const AnalyzePage = () => {
 
   const articleId = Array.isArray(id) ? id[0] : id;
 
+  // useEffect(() => {
+	// 	if (articleId) {
+	// 		fetchArticle(articleId);
+	// 	}
+	// }, [articleId]);
+
   useEffect(() => {
-		if (articleId) {
-			fetchArticle(articleId);
-		}
-	}, [articleId]);
+		fetchArticle(articleId);
+	}, []);
 
   const fetchArticle = async (id: string) => {
     try {
@@ -52,8 +56,10 @@ const AnalyzePage = () => {
         setClaim(articleData.claim || '');
         setEvidence(articleData.evidence || '');
       } else {
-        alert('This article is not available for analyze');
-        router.push('/pages/analyze');
+        console.log(articleData)
+        console.log(articleData.status)
+        alert('This article is not available for analyse');
+        router.push('/pages/analyse');
       }
     } catch (error) {
       console.error('Failed to fetch article: ', error);
@@ -62,7 +68,8 @@ const AnalyzePage = () => {
     }
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     setLoadingSubmit(true);
     try {
       const response = await fetch(`http://localhost:8082/articles/${displayedArticle!._id}`, {
