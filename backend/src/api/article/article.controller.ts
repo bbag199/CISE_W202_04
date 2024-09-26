@@ -16,6 +16,11 @@ export class ArticlesController {
   async findAll(): Promise<Article[]> {
     return this.articlesService.findAll();
   }
+  
+  @Get('search')
+  async searchByTitle(@Query('title') title: string): Promise<Article[]> {
+    return this.articlesService.searchByTitle(title);
+  }  
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Article> {
@@ -37,13 +42,14 @@ export class ArticlesController {
     return this.articlesService.delete(id);
   }
 
-  @Get('search')
-  async searchByTitle(@Query('title') title: string) {
-    return this.articlesService.searchByTitle(title);
-  }
 
   @Get('status/unmoderated')
   async findUnmoderatedArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Unmoderated');
-}
+  }
+
+  @Get('status/moderated')
+  async findArticlesArticles(): Promise<Article[]> {
+    return this.articlesService.findByStatus('Moderated');
+  }
 }
