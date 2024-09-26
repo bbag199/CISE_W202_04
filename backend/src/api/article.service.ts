@@ -45,13 +45,11 @@ export class ArticlesService {
   }
 
   async searchByTitle(title: string): Promise<Article[]> {
-    try {
-      return await this.articleModel.find({ title: { $regex: title, $options: 'i' } }).exec();
-    } catch (error) {
-      console.error('Error in searchByTitle:', error);
-      throw new Error('Failed to search articles by title');
-    }
+    const query = { title: { $regex: title, $options: 'i' } };
+  
+    return this.articleModel.find(query).exec();
   }
+  
 
   async findByStatus(statusToSearch: string): Promise<Article[]> {
     return this.articleModel.find({ status: statusToSearch }).exec();
