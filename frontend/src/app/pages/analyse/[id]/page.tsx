@@ -39,7 +39,7 @@ const AnalyzePage = () => {
 
   useEffect(() => {
 		fetchArticle(articleId);
-	}, []);
+	}, [articleId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchArticle = async (id: string) => {
     try {
