@@ -31,7 +31,7 @@ const ModerateArticlePage = () => {
 		if (articleId) {
 			fetchArticle(articleId);
 		}
-	}, [articleId]);
+	}, [articleId]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   // Fetch a specific article by ID
