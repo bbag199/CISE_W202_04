@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { IsString, IsNotEmpty, IsArray, IsOptional, IsNumber, Min, Max } from 'class-validator';
 
 export class CreateArticleDto {
