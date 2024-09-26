@@ -117,41 +117,46 @@ const AnalyzePage = () => {
 
       <br />
 
-      {/*Text fields from claims and evd */}
-      <div>
-        <label>Claim</label>
-        <textarea
-          value={claim}
-          onChange={(e) => setClaim(e.target.value)}
-          placeholder="Enter claim"
-          className="border p-2 rounded w-full"
-        />
-      </div>
+      <form onSubmit={onSubmit}>
+        {/*Text fields from claims and evd */}
+        <div>
+          <label>Claim</label>
+          <textarea
+            value={claim}
+            onChange={(e) => setClaim(e.target.value)}
+            placeholder="Enter claim"
+            className="border p-2 rounded w-full"
+            required
+          />
+        </div>
 
-      <div>
-        <label>Evidence</label>
-        <textarea
-          value={evidence}
-          onChange={(e) => setEvidence(e.target.value)}
-          placeholder="Evidence"
-          className="border p-2 rounded w-full"
-        />
-      </div>
+        <div>
+          <label>Evidence</label>
+          <textarea
+            value={evidence}
+            onChange={(e) => setEvidence(e.target.value)}
+            placeholder="Evidence"
+            className="border p-2 rounded w-full"
+            required
+          />
+        </div>
 
-      <div className="flex space-x-4">
+        <div className="flex space-x-4">
 
-        <button 
-          onClick={onSubmit}
-          className={`px-4 py-2 font-semibold rounded ${
-            loadingSubmit
-              ? 'bg-blue-300 text-blue-700 cursor-not-allowed'  // Disabled styles
-              : 'bg-blue-500 text-white hover:bg-blue-600'      // Active styles
-          }`}
-          disabled={loadingSubmit}
-        >
-          Submit 
-        </button>
-      </div>
+          <button 
+            type="submit"
+            value="submit"
+            className={`px-4 py-2 font-semibold rounded ${
+              loadingSubmit
+                ? 'bg-blue-300 text-blue-700 cursor-not-allowed'  // Disabled styles
+                : 'bg-blue-500 text-white hover:bg-blue-600'      // Active styles
+            }`}
+            disabled={loadingSubmit}
+          >
+            Submit 
+          </button>
+        </div>
+      </form>
 
     </>
   ) 
