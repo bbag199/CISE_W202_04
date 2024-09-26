@@ -10,7 +10,7 @@ function AuthPage() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
    
-    const [error, setError] = useState(''); // State to hold error messages
+    const [error, setError] = useState(''); 
 
 
 
@@ -50,15 +50,6 @@ function AuthPage() {
       return password.length >= minLength && hasUpperCase && hasLowerCase && hasSpecialChar;
     }
   
-
-    // const handleSignup = async (event) => {
-    //   event.preventDefault();
-  
-    //   // Check password complexity
-    //   if (!validatePassword(password)) {
-    //     setError('Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.');
-    //     return;
-    //   }
       
     const handleSignup = async (event) => {
     event.preventDefault();
@@ -78,17 +69,17 @@ function AuthPage() {
     const data = await response.json();
     if (response.ok) {
         console.log('Signup Successful', data);
-        // Redirect or manage session
+      
     } else {
         console.error('Signup Failed', data.message);
         setError(data.message || 'Failed to sign up.');
-        // Optionally update UI with error message
+       
     }
 };
 
     const toggleForm = () => {
-        setIsLogin(!isLogin);  // Toggle between forms
-        setError(''); // Clear any existing errors when toggling form
+        setIsLogin(!isLogin);  
+        setError(''); 
     };
 
    
