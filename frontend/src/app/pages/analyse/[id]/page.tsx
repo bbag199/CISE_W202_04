@@ -13,7 +13,7 @@ interface Article {
   rating: number;
   status: string;
   //claim and evidence
-  claim: string;
+  claim: string[];
   evidence: string;
 }
 
@@ -27,7 +27,7 @@ const AnalyzePage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
 
   //state for claim and evidence
-  const [claim, setClaim] = useState<string>("");
+  const [claim, setClaim] = useState<string[]>([""]);
   const [evidence, setEvidence] = useState<string>("");
 
   const articleId = Array.isArray(id) ? id[0] : id;
@@ -54,7 +54,7 @@ const AnalyzePage = () => {
       if (articleData && articleData.status === "Moderated") {
         setDisplayedArticle(articleData);
         //pre-fill claim and evidence
-        setClaim(articleData.claim || "");
+        setClaim(articleData.claim || [""]);
         setEvidence(articleData.evidence || "");
       } else {
         console.log(articleData);
@@ -101,6 +101,21 @@ const AnalyzePage = () => {
       setLoadingSubmit(false);
     }
   };
+  //
+  const handleClaimChange = (index: number, value: string) => {
+    const newClaim = [...claim];
+    newClaim[index] = value;
+    setClaim(newClaim);
+  };
+  //
+  const addClaimField = () => {
+    setClaim([...claim, ""]);
+  };
+
+  const removeClaimField = (index: number) => {
+    const newClaims = claim.filter((_, i) => i !== index);
+    setClaim(newClaims);
+  };
 
   if (loadingArticle) {
     return <p>Loading...</p>;
@@ -140,13 +155,31 @@ const AnalyzePage = () => {
         {/*Text fields from claims and evd */}
         <div>
           <label>Claim</label>
-          <textarea
-            value={claim}
-            onChange={(e) => setClaim(e.target.value)}
-            placeholder="Enter claim"
-            className="border p-2 rounded w-full"
-            required
-          />
+          {claim.map((claim, index) => (
+            <div key={index} className="mb-2">
+              <textarea
+                value={claim}
+                onChange={(e) => handleClaimChange(index, e.target.value)}
+                placeholder="Enter claim"
+                className="border p-2 rounded w-full"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => removeClaimField(index)}
+                className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+              >
+                Remove Claim
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addClaimField}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Add Claim
+          </button>
         </div>
 
         <div>
@@ -160,7 +193,7 @@ const AnalyzePage = () => {
           />
         </div>
 
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mt-4">
           <button
             type="submit"
             value="submit"
