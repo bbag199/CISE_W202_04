@@ -1,7 +1,8 @@
-"use client"; // Mark this component as a client component
+"use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../../../context/AuthContext";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
@@ -10,6 +11,7 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
+  const { login } = useAuth();
   const router = useRouter();
 
   const handleLogin = async (event: { preventDefault: () => void }) => {
@@ -22,14 +24,16 @@ function AuthPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, password }),
-        credentials: "include", // Important: This allows the browser to include the cookie set by the server
       });
 
       const data = await response.json();
       if (response.ok) {
         console.log("Login Successful", data);
-        // Redirect to home page after successful login
+        // Store the access token in localStorage
         localStorage.setItem("access_token", data.access_token);
+        // Update the login state in AuthContext
+        login();
+        // Redirect to the home page or another page
         router.push("/home");
       } else {
         console.error("Login Failed", data.message);
@@ -58,13 +62,11 @@ function AuthPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, email, password }),
-        credentials: "include", // Include cookies in the request
       });
 
       const data = await response.json();
       if (response.ok) {
         console.log("Signup Successful", data);
-        // Optionally redirect to login or home page
       } else {
         console.error("Signup Failed", data.message);
         setError(data.message || "Failed to sign up.");
