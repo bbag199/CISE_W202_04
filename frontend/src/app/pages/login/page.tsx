@@ -1,55 +1,49 @@
-"use client"; // Mark this component as a client component
+"use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../../context/AuthContext";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true); // Toggle between login and signup
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
   const [error, setError] = useState("");
+
+  const { login } = useAuth();
+  const router = useRouter();
 
   const handleLogin = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:8082/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      console.log("Login Successful", data);
 
-      // Redirect or manage session
-    } else {
-      console.error("Login Failed", data.message);
-      // Optionally update UI with error message
+    try {
+      const response = await fetch("http://localhost:8082/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Login Successful", data);
+        // Store the access token in localStorage
+        localStorage.setItem("access_token", data.access_token);
+        // Update the login state in AuthContext
+        login();
+        // Redirect to the home page or another page
+        router.push("/home");
+      } else {
+        console.error("Login Failed", data.message);
+        setError(data.message || "Failed to log in.");
+      }
+    } catch (error) {
+      console.error("An error occurred while logging in:", error);
+      setError("An error occurred. Please try again.");
     }
   };
-
-  function validatePassword(password: string): boolean {
-    if (typeof password !== "string") {
-      return false;
-    }
-    const minLength = 8;
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    //const hasNumbers = /\d/.test(password);
-    const hasSpecialChar = /[\s~`!@#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?()|._]/.test(
-      password
-    );
-
-    //return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar;
-    return (
-      password.length >= minLength &&
-      hasUpperCase &&
-      hasLowerCase &&
-      hasSpecialChar
-    );
-  }
 
   const handleSignup = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -61,21 +55,43 @@ function AuthPage() {
       return;
     }
 
-    const response = await fetch("http://localhost:8082/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      console.log("Signup Successful", data);
-    } else {
-      console.error("Signup Failed", data.message);
-      setError(data.message || "Failed to sign up.");
+    try {
+      const response = await fetch("http://localhost:8082/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Signup Successful", data);
+      } else {
+        console.error("Signup Failed", data.message);
+        setError(data.message || "Failed to sign up.");
+      }
+    } catch (error) {
+      console.error("An error occurred while signing up:", error);
+      setError("An error occurred. Please try again.");
     }
   };
+
+  function validatePassword(password: string): boolean {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasSpecialChar = /[\s~`!@#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?()|._]/.test(
+      password
+    );
+
+    return (
+      password.length >= minLength &&
+      hasUpperCase &&
+      hasLowerCase &&
+      hasSpecialChar
+    );
+  }
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
