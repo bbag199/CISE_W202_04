@@ -41,6 +41,9 @@ const Navbar = () => {
                     <>
                       {/* Show Moderate, Analyse, and Logout if the user is logged in */}
                       <li>
+                        <Link href="/pages/submit">Submit</Link>
+                      </li>
+                      <li>
                         <Link href="/pages/moderate">Moderate</Link>
                       </li>
                       <li>
