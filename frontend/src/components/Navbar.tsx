@@ -1,7 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { isLoggedIn, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/home");
+  };
+
   return (
     <div className="pt-5">
       <div className="navbar bg-blue-100 shadow-xl w-[97%] m-auto rounded-md">
@@ -20,18 +32,26 @@ const Navbar = () => {
                   <li>
                     <Link href="/pages/browse">Browse</Link>
                   </li>
-                  <li>
-                    <Link href="/pages/submit">Submit</Link>
-                  </li>
-                  <li>
-                    <Link href="/pages/moderate">Moderate</Link>
-                  </li>
-                  <li>
-                    <Link href="/pages/analyse">Analyse</Link>
-                  </li>
-                  <li>
-                    <Link href="/pages/login">Login</Link>
-                  </li>
+                  {!isLoggedIn ? (
+                    <li>
+                      <Link href="/pages/login">Login</Link>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        <Link href="/pages/submit">Submit</Link>
+                      </li>
+                      <li>
+                        <Link href="/pages/moderate">Moderate</Link>
+                      </li>
+                      <li>
+                        <Link href="/pages/analyse">Analyse</Link>
+                      </li>
+                      <li>
+                        <button onClick={handleLogout}>Logout</button>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </details>
             </li>

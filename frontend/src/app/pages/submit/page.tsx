@@ -1,6 +1,7 @@
 "use client"; // Mark this component as a client component
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
 
 interface Article {
   title: string;
@@ -21,6 +22,8 @@ const DefaultEmptyArticle: Article = {
 };
 
 const SubmitArticlePage = () => {
+  useRequireAuth();
+
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
