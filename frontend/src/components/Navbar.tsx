@@ -10,7 +10,7 @@ const Navbar = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    logout(); // Update the state after logging out
+    logout();
     router.push("/home");
   };
 
@@ -29,7 +29,6 @@ const Navbar = () => {
               <details>
                 <summary>Menu</summary>
                 <ul className="bg-base-100 rounded-t-none p-2 text-lg">
-                  {/* Always show Browse and Login */}
                   <li>
                     <Link href="/pages/browse">Browse</Link>
                   </li>
@@ -39,7 +38,6 @@ const Navbar = () => {
                     </li>
                   ) : (
                     <>
-                      {/* Show Moderate, Analyse, and Logout if the user is logged in */}
                       <li>
                         <Link href="/pages/submit">Submit</Link>
                       </li>
