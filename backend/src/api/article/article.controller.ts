@@ -1,9 +1,18 @@
-import { Controller, Get, Query, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { ArticlesService } from './article.service';
 import { CreateArticleDto } from './submit-article.dto';
 import { Article } from './article.schema';
 
-@Controller('articles') 
+@Controller('articles')
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
@@ -16,11 +25,11 @@ export class ArticlesController {
   async findAll(): Promise<Article[]> {
     return this.articlesService.findAll();
   }
-  
+
   @Get('search')
   async searchByTitle(@Query('title') title: string): Promise<Article[]> {
     return this.articlesService.searchByTitle(title);
-  }  
+  }
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Article> {
@@ -33,7 +42,10 @@ export class ArticlesController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() createArticleDto: CreateArticleDto): Promise<Article> {
+  async update(
+    @Param('id') id: string,
+    @Body() createArticleDto: CreateArticleDto,
+  ): Promise<Article> {
     return this.articlesService.update(id, createArticleDto);
   }
 
@@ -41,7 +53,6 @@ export class ArticlesController {
   async delete(@Param('id') id: string): Promise<Article> {
     return this.articlesService.delete(id);
   }
-
 
   @Get('status/unmoderated')
   async findUnmoderatedArticles(): Promise<Article[]> {
@@ -52,4 +63,9 @@ export class ArticlesController {
   async findArticlesArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Moderated');
   }
+
+  // @Delete()
+  // async deleteAll(): Promise<void> {
+  //   return this.articlesService.deleteAll();
+  // }
 }

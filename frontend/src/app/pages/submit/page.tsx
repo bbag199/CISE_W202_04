@@ -9,7 +9,7 @@ interface Article {
   source: string;
   publicationYear: string;
   doi: string;
-  rating: number;
+  rating: number[];
 }
 
 const DefaultEmptyArticle: Article = {
@@ -18,7 +18,7 @@ const DefaultEmptyArticle: Article = {
   source: "",
   publicationYear: "",
   doi: "",
-  rating: 0,
+  rating: [],
 };
 
 const SubmitArticlePage = () => {
@@ -26,12 +26,16 @@ const SubmitArticlePage = () => {
 
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [currentRating, setCurrentRating] = useState<number | null>(null);  // To hold the current selection
 
+  
   const handleAuthorChange = (index: number, newValue: string) => {
     const newAuthors = [...article.authors];
     newAuthors[index] = newValue;
     setArticle({ ...article, authors: newAuthors });
   };
+
+  
 
   const handleAddAuthor = () => {
     setArticle({ ...article, authors: [...article.authors, ""] });
@@ -42,20 +46,38 @@ const SubmitArticlePage = () => {
     setArticle({ ...article, authors: newAuthors });
   };
 
+  // const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  //   const { name, value } = event.target;
+  //   setArticle({ ...article, [name]: value });
+  // };
+
+ 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
-    setArticle({ ...article, [name]: value });
+    if (name === 'rating') {
+      setCurrentRating(Number(value));  // Set current rating
+    } else {
+      setArticle({ ...article, [name]: value });
+    }
   };
+
+ 
+  
+
+
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const authorsArray = article.authors.map((author) => author.trim());
+    const updatedRatings = currentRating ? [...article.rating, currentRating] : [...article.rating]; // Add the new rating to the existing array
+
+    //const updatedRatings = currentRating ? [currentRating] : []; // Wrap current rating in an array if not null
 
     const articleToSubmit = {
       ...article,
       authors: authorsArray,
-      rating: Number(article.rating),
+      rating: updatedRatings,  // Now it's an array of ratings
     };
 
     try {
@@ -70,6 +92,7 @@ const SubmitArticlePage = () => {
       if (response.ok) {
         console.log("Article submitted successfully");
         setArticle(DefaultEmptyArticle); // Clear the form
+        setCurrentRating(null); 
         setSuccessMessage("Article submitted successfully!"); // Set success message
       } else {
         console.error("Failed to submit article");
@@ -181,7 +204,7 @@ const SubmitArticlePage = () => {
         <select
           id="rating"
           name="rating"
-          value={article.rating}
+          value={currentRating ?? '0'}
           onChange={onChange}
           required
           className="mb-4 p-2 w-full bg-gray-100"
