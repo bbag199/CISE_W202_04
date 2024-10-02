@@ -1,6 +1,7 @@
 'use client'; // Mark this component as a client component
 
 import React, { useState, useEffect } from 'react';
+import Link from "next/link";
 
 interface Article {
   _id: string;
@@ -100,7 +101,12 @@ const BrowsePage = () => {
                   articles.map((article) => (
                     <tr key={article._id}>
                       <td className="border px-4 py-2">
+                        <Link
+                        href={`/pages/browse/${article._id}`}
+                        className="text-blue-600 hover:underline"
+                        >
                         {article.title}
+                        </Link>
                       </td>
                       <td className="border px-4 py-2">{article.authors.join(', ')}</td>
                       <td className="border px-4 py-2">{article.source}</td>
