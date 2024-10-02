@@ -41,7 +41,7 @@ const ArticleDetailsPage = () => {
   }
 
   return (
-    <div className="mt-16">
+    <div className="min-h-screen mt-16">
       <h1>{article.title}</h1>
       <p>
         <strong>Authors:</strong> {article.authors.join(", ")}
