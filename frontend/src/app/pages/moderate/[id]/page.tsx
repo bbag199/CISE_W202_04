@@ -122,7 +122,7 @@ const ModerateArticlePage = () => {
   }
 
   return (
-    <>
+    <div className="min-h-screen">
       <p>Moderation Page</p>
 
       <br />
@@ -165,7 +165,7 @@ const ModerateArticlePage = () => {
         </button>
       </div>
 
-    </>
+    </div>
   ) 
 
 };

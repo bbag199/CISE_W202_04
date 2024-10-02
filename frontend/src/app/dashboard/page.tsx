@@ -16,7 +16,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="min-h-screen flex justify-center items-center h-screen">
       <h1 className="text-xl font-bold mb-4">Dashboard</h1>
 
       <label htmlFor="title" className="block mb-2">

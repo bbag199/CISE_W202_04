@@ -99,13 +99,13 @@ function AuthPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 mt-10 bg-white shadow-md rounded-lg">
+    <div className="min-h-screen max-w-4xl mx-auto p-8 mt-10 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold text-gray-700 mb-6">
         {isLogin ? "Login" : "Sign Up"}
       </h1>
       <form onSubmit={isLogin ? handleLogin : handleSignup}>
         <input
-          className="w-full p-2 border border-gray-300 rounded mt-2"
+          className="w-full bg-white p-2 border border-gray-300 rounded mt-2"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -123,7 +123,7 @@ function AuthPage() {
           />
         )}
         <input
-          className="w-full p-2 border border-gray-300 rounded mt-2"
+          className="w-full bg-white p-2 border border-gray-300 rounded mt-2"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

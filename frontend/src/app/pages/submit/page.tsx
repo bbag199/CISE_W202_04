@@ -42,9 +42,7 @@ const SubmitArticlePage = () => {
     setArticle({ ...article, authors: newAuthors });
   };
 
-  const onChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setArticle({ ...article, [name]: value });
   };
@@ -80,12 +78,12 @@ const SubmitArticlePage = () => {
       console.error("Error submitting article:", error);
     }
   };
-
+  
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="min-h-screen flex flex-col items-center pt-5"> {/* Added padding-top to avoid overlap with navbar */}
       <form
         onSubmit={onSubmit}
-        className="bg-white p-6 rounded shadow-lg w-3/4 max-w-4xl"
+        className="bg-white p-6 rounded shadow-lg w-full max-w-4xl mx-auto" // Ensured it doesn't extend off the screen
       >
         <h1 className="text-xl font-bold mb-4">Article Submission</h1>
 
