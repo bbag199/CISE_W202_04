@@ -6,7 +6,9 @@ import { CreateArticleDto } from './submit-article.dto';
 
 @Injectable()
 export class ArticlesService {
-    constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
+  constructor(
+    @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
+  ) {}
 
   test(): string {
     return 'article route testing';
@@ -32,11 +34,16 @@ export class ArticlesService {
   // }
 
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
-    return await this.articleModel.create(createArticleDto); 
+    return await this.articleModel.create(createArticleDto);
   }
 
-  async update(id: string, createArticleDto: CreateArticleDto): Promise<Article> {
-    return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
+  async update(
+    id: string,
+    createArticleDto: CreateArticleDto,
+  ): Promise<Article> {
+    return await this.articleModel
+      .findByIdAndUpdate(id, createArticleDto, { new: true })
+      .exec();
   }
 
   async delete(id: string): Promise<Article> {
@@ -46,13 +53,16 @@ export class ArticlesService {
 
   async searchByTitle(title: string): Promise<Article[]> {
     const query = { title: { $regex: title, $options: 'i' } };
-  
+
     return this.articleModel.find(query).exec();
   }
-  
 
   async findByStatus(statusToSearch: string): Promise<Article[]> {
     return this.articleModel.find({ status: statusToSearch }).exec();
   }
 
+  async count(selectedStatus: string): Promise<number> {
+    const filter = { status: { $eq: selectedStatus } };
+    return this.articleModel.countDocuments(filter).exec();
+  }
 }
