@@ -114,7 +114,7 @@ function AuthPage() {
         />
         {!isLogin && (
           <input
-            className="w-full p-2 border border-gray-300 rounded mt-2"
+            className="w-full bg-white p-2 border border-gray-300 rounded mt-2"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
