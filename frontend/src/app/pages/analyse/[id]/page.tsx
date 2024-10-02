@@ -72,7 +72,11 @@ const AnalyzePage = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoadingSubmit(true);
+    
     try {
+
+      const concatClaim = claim.join(', ');
+
       const response = await fetch(
         `http://localhost:8082/articles/${displayedArticle!._id}`,
         {
@@ -83,7 +87,7 @@ const AnalyzePage = () => {
           body: JSON.stringify({
             ...displayedArticle,
             status: "Analyzed",
-            claim: claim,
+            claim: concatClaim,
             evidence: evidence,
           }),
         }
@@ -147,6 +151,8 @@ const AnalyzePage = () => {
           </a>
         </h3>
         <h4>Article ID: {displayedArticle._id}</h4>
+
+        <h4> Claims: {displayedArticle.claim.join(", ")}</h4>
       </div>
 
       <br />
