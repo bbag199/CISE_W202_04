@@ -28,27 +28,27 @@ const Navbar = () => {
             <li>
               <details>
                 <summary>Menu</summary>
-                <ul className="bg-base-100 rounded-t-none p-2 text-lg">
+                <ul className="bg-blue-200 rounded-t-none p-2 text-lg">
                   <li>
-                    <Link href="/pages/browse">Browse</Link>
+                    <Link className="hover:bg-blue-300" href="/pages/browse">Browse</Link>
                   </li>
                   {!isLoggedIn ? (
                     <li>
-                      <Link href="/pages/login">Login</Link>
+                      <Link className="hover:bg-blue-300" href="/pages/login">Login</Link>
                     </li>
                   ) : (
                     <>
                       <li>
-                        <Link href="/pages/submit">Submit</Link>
+                        <Link className="hover:bg-blue-300" href="/pages/submit">Submit</Link>
                       </li>
                       <li>
-                        <Link href="/pages/moderate">Moderate</Link>
+                        <Link className="hover:bg-blue-300" href="/pages/moderate">Moderate</Link>
                       </li>
                       <li>
-                        <Link href="/pages/analyse">Analyse</Link>
+                        <Link className="hover:bg-blue-300" href="/pages/analyse">Analyse</Link>
                       </li>
                       <li>
-                        <button onClick={handleLogout}>Logout</button>
+                        <button className="hover:bg-blue-300" onClick={handleLogout}>Logout</button>
                       </li>
                     </>
                   )}
