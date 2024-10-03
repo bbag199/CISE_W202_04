@@ -71,26 +71,7 @@ const ArticleAdminPage = () => {
   const handleEvidenceChange = (e) => setEditableEvidence(e.target.value);
   const handleStatusChange = (e) => setEditableStatus(e.target.value);
 
-  const updateArticleTitle = async () => {
-    try {
-      const response = await fetch(`http://localhost:8082/articles/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: editableTitle }),
-      });
-      if (response.ok) {
-        const updatedArticle = await response.json();
-        setArticle(updatedArticle);
-        alert('Title updated successfully!');
-      } else {
-        console.error('Failed to update title');
-      }
-    } catch (error) {
-      console.error("Error updating title:", error);
-    }
-  };
+  
 
   
 
