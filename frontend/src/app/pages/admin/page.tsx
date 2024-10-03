@@ -73,7 +73,7 @@ const BrowsePage = () => {
     <div className="mt-16">
       <div className="flex justify-center items-center space-x-4 xl:w-3/4 mx-auto">
         <span className="font-bold text-xl flex-shrink-0 whitespace-nowrap">
-          Browse articles
+          Browse articles (ADMIN)
         </span>
         <input
           type="search"

@@ -20,7 +20,6 @@ interface Article {
 const ArticleAdminPage = () => {
   const { id } = useParams();
   const [article, setArticle] = useState<Article | null>(null);
-  const [newRating, setNewRating] = useState<number>(0);
   const [editableTitle, setEditableTitle] = useState('');
   const [editableAuthors, setEditableAuthors] = useState('');
   const [editableSource, setEditableSource] = useState('');
