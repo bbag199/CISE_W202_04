@@ -42,31 +42,41 @@ const ArticleDetailsPage = () => {
 
   return (
     <div className="min-h-screen mt-16">
-      <h1>{article.title}</h1>
+      <h1><strong>Title: </strong>{article.title}</h1>
       <p>
-        <strong>Authors:</strong> {article.authors.join(", ")}
+        <strong>Authors: </strong> {article.authors.join(", ")}
       </p>
       <p>
-        <strong>Source:</strong> {article.source}
+        <strong>Source: </strong> {article.source}
       </p>
       <p>
-        <strong>Publication Year:</strong> {article.publicationYear}
+        <strong>Publication Year: </strong> {article.publicationYear}
       </p>
       <p>
-        <strong>DOI:</strong> {article.doi}
+        <strong>DOI: </strong> {article.doi}
       </p>
       <p>
-        <strong>Claim:</strong> {article.claim || "N/A"}
+        <strong>Claim: </strong> {article.claim || "N/A"}
       </p>
       <p>
-        <strong>Evidence:</strong> {article.evidence || "N/A"}
+        <strong>Evidence: </strong> {article.evidence || "N/A"}
       </p>
       <p>
-        <strong>Rating:</strong> {article.rating}/5
+        <strong>Rating: </strong> {article.rating}/5
       </p>
       <p>
-        <strong>Status:</strong> {article.status || "N/A"}
+        <strong>Status: </strong> {article.status || "N/A"}
       </p>
+      <p>
+        <strong>Add Rating: </strong>
+      </p>
+      <button
+            type="button"
+       
+            className="mt-2 mb-4 bg-green-500 hover:bg-green-700 text-white p-2 rounded"
+          >
+            Rate Article
+          </button>
     </div>
   );
 };

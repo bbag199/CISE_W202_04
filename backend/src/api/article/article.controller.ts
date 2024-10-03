@@ -7,6 +7,7 @@ import {
   Param,
   Put,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { ArticlesService } from './article.service';
 import { CreateArticleDto } from './submit-article.dto';
@@ -57,6 +58,16 @@ export class ArticlesController {
   @Get('status/unmoderated')
   async findUnmoderatedArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Unmoderated');
+  }
+
+  // In your ArticlesController
+
+  @Patch(':id/rate') // Using PATCH since it's a partial update
+  async rateArticle(
+    @Param('id') id: string,
+    @Body('rating') rating: number,
+  ): Promise<Article> {
+    return this.articlesService.addRating(id, rating);
   }
 
   @Get('status/moderated')
