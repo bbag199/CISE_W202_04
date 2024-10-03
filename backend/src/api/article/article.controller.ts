@@ -60,12 +60,20 @@ export class ArticlesController {
     return this.articlesService.findByStatus('Unmoderated');
   }
 
-  @Patch(':id/rate') 
+  @Patch(':id/rate')
   async rateArticle(
     @Param('id') id: string,
     @Body('rating') rating: number,
   ): Promise<Article> {
     return this.articlesService.addRating(id, rating);
+  }
+
+  @Patch(':id')
+  updateArticle(
+    @Param('id') id: string,
+    @Body() updateDto: any,
+  ): Promise<Article> {
+    return this.articlesService.updateArticle(id, updateDto);
   }
 
   @Get('status/moderated')
