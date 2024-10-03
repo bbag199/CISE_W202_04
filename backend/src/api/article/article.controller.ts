@@ -60,8 +60,6 @@ export class ArticlesController {
     return this.articlesService.findByStatus('Unmoderated');
   }
 
-  // In your ArticlesController
-
   @Patch(':id/rate') // Using PATCH since it's a partial update
   async rateArticle(
     @Param('id') id: string,
@@ -74,9 +72,4 @@ export class ArticlesController {
   async findArticlesArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Moderated');
   }
-
-  // @Delete()
-  // async deleteAll(): Promise<void> {
-  //   return this.articlesService.deleteAll();
-  // }
 }

@@ -27,12 +27,17 @@ export class ArticlesService {
   }
 
   async addRating(id: string, newRating: number): Promise<Article> {
+    console.log(`Finding article with id: ${id}`);
     const article = await this.articleModel.findById(id);
     if (!article) {
+      console.error('Article not found');
       throw new NotFoundException('Article not found');
     }
-    article.rating.push(newRating); // Add new rating to the array
+    console.log(`Adding new rating: ${newRating}`);
+    console.log(`Current ratings before adding: ${article.rating}`);
+    article.rating.push(newRating);
     await article.save();
+    console.log(`Saved article with new ratings: ${article.rating}`);
     return article;
   }
 
