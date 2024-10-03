@@ -13,7 +13,7 @@ interface Article {
   doi: string;
   claim: string;
   evidence: string;
-  rating: number;
+  rating: number[];
   status: string;
 }
 
@@ -67,50 +67,40 @@ const BrowseAnalyze = () => {
                 <th className="border px-4 py-2 text-left font-bold">
                   Evidence
                 </th>
-                <th className="border px-4 py-2 text-left font-bold">Rating</th>
+                <th className="border px-4 py-2 text-left font-bold">Average Rating</th>
                 <th className="border px-4 py-2 text-left font-bold">Status</th>
               </tr>
             </thead>
             <tbody>
               {/* Render the article rows based on search results */}
               {articles.length > 0 ? (
-                articles.map((article) => (
-                  <tr key={article._id}>
-                    <td className="border px-4 py-2">
-                      <Link
-                        href={`/pages/analyse/${article._id}`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        {article.title}
-                      </Link>
-                    </td>
-                    <td className="border px-4 py-2">
-                      {article.authors.join(", ")}
-                    </td>
-                    <td className="border px-4 py-2">{article.source}</td>
-                    <td className="border px-4 py-2">
-                      {article.publicationYear}
-                    </td>
-                    <td className="border px-4 py-2">{article.doi}</td>
-                    <td className="border px-4 py-2">
-                      {article.claim || "N/A"}
-                    </td>
-                    <td className="border px-4 py-2">
-                      {article.evidence || "N/A"}
-                    </td>
-                    <td className="border px-4 py-2">{article.rating}/5</td>
-                    <td className="border px-4 py-2">
-                      {article.status || "N/A"}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={8} className="text-center">
-                    No articles found.
-                  </td>
-                </tr>
-              )}
+  articles.map((article) => {
+    const averageRating = article.rating.length > 0
+      ? (article.rating.reduce((acc, curr) => acc + curr, 0) / article.rating.length).toFixed(1)
+      : "No ratings";
+    return (
+      <tr key={article._id}>
+        <td className="border px-4 py-2">
+          <Link href={`/pages/analyse/${article._id}`} className="text-blue-600 hover:underline">
+            {article.title}
+          </Link>
+        </td>
+        <td className="border px-4 py-2">{article.authors.join(", ")}</td>
+        <td className="border px-4 py-2">{article.source}</td>
+        <td className="border px-4 py-2">{article.publicationYear}</td>
+        <td className="border px-4 py-2">{article.doi}</td>
+        <td className="border px-4 py-2">{article.claim || "N/A"}</td>
+        <td className="border px-4 py-2">{article.evidence || "N/A"}</td>
+        <td className="border px-4 py-2">{averageRating}/5</td>
+        <td className="border px-4 py-2">{article.status || "N/A"}</td>
+      </tr>
+    );
+  })
+) : (
+  <tr>
+    <td colSpan={9} className="text-center">No articles found.</td>
+  </tr>
+)}
             </tbody>
           </table>
         </div>
