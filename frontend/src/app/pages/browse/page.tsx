@@ -12,7 +12,7 @@ interface Article {
   doi: string;
   claim: string;
   evidence: string;
-  rating: number;
+  rating: number[];
 }
 
 const BrowsePage = () => {
@@ -60,6 +60,13 @@ const BrowsePage = () => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const calculateAverageRating = (ratings: number[]) => {
+    if (ratings.length === 0) return 'No ratings';
+    const sum = ratings.reduce((acc, curr) => acc + curr, 0);
+    const average = (sum / ratings.length).toFixed(1);
+    return `${average}/5`;
   };
 
   return (
@@ -114,7 +121,7 @@ const BrowsePage = () => {
                       <td className="border px-4 py-2">{article.doi}</td>
                       <td className="border px-4 py-2">{article.claim || 'N/A'}</td>
                       <td className="border px-4 py-2">{article.evidence || 'N/A'}</td>
-                      <td className="border px-4 py-2">{article.rating}/5</td>
+                      <td className="border px-4 py-2">{calculateAverageRating(article.rating)}</td>
                     </tr>
                   ))
                 ) : (
