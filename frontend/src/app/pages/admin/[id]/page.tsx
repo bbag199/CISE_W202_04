@@ -10,8 +10,8 @@ interface Article {
   source: string;
   publicationYear: string;
   doi: string;
-  claim: string;
-  evidence: string;
+  claim: string[];
+  evidence: string[];
   rating: number[];
   status: string;
   
@@ -38,12 +38,12 @@ const ArticleAdminPage = () => {
         const data = await response.json();
         setArticle(data);
         setEditableTitle(data.title);
-        setEditableAuthors(data.authors.join(', ')); // Join array of authors into a string
+        setEditableAuthors(data.authors.join(', ')); 
         setEditableSource(data.source);
         setEditableYear(data.publicationYear);
         setEditableDOI(data.doi);
-        setEditableClaim(data.claim);
-        setEditableEvidence(data.evidence);
+        setEditableClaim(data.claim.join(', '));
+        setEditableEvidence(data.evidence.join(', '));
         setEditableStatus(data.status);
       } catch (error) {
         console.error("Error fetching article:", error);
@@ -84,8 +84,8 @@ const ArticleAdminPage = () => {
       source: editableSource,
       publicationYear: editableYear,
       doi: editableDOI,
-      claim: editableClaim,
-      evidence: editableEvidence,
+      claim: editableClaim.split(',').map(claim => claim.trim()),
+      evidence: editableEvidence.split(',').map(evidence => evidence.trim()),
       status: editableStatus,
     };
   
