@@ -131,117 +131,106 @@ const ArticleAdminPage = () => {
   return (
     <div className="min-h-screen mt-16 p-8 bg-gray-50">
       <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
-    
-        
-      
-      
-
-       
-  <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
-    <h1 className="text-2xl font-bold mb-4">Edit Article</h1>
-
-    <div className="mb-4">
-      <label htmlFor="title" className="font-medium">Title:</label>
-      <input
-        type="text"
-        id="title"
-        value={editableTitle}
-        onChange={handleTitleChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="authors" className="font-medium">Authors:</label>
-      <input
-        type="text"
-        id="authors"
-        value={editableAuthors}
-        onChange={handleAuthorsChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="source" className="font-medium">Source:</label>
-      <input
-        type="text"
-        id="source"
-        value={editableSource}
-        onChange={handleSourceChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="year" className="font-medium">Publication Year:</label>
-      <input
-        type="text"
-        id="year"
-        value={editableYear}
-        onChange={handleYearChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="doi" className="font-medium">DOI:</label>
-      <input
-        type="text"
-        id="doi"
-        value={editableDOI}
-        onChange={handleDOIChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="claim" className="font-medium">Claim:</label>
-      <textarea
-        id="claim"
-        value={editableClaim}
-        onChange={handleClaimChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="evidence" className="font-medium">Evidence:</label>
-      <textarea
-        id="evidence"
-        value={editableEvidence}
-        onChange={handleEvidenceChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      
-      />
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="status" className="font-medium">Status:</label>
-      <input
-        type="text"
-        id="status"
-        value={editableStatus}
-        onChange={handleStatusChange}
-        className="block w-full p-2 border border-gray-300 rounded mt-1"
-      />
-    </div>
-
-    <button
-      onClick={updateArticleDetails}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Save Changes
-    </button>
-  </div>
-</div>
-
-
-        
-      
+        <h1 className="text-2xl font-bold mb-4">Edit Article</h1>
+  
+        <div className="mb-4">
+          <label htmlFor="title" className="font-medium">Title:</label>
+          <input
+            type="text"
+            id="title"
+            value={editableTitle}
+            onChange={handleTitleChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="authors" className="font-medium">Authors:</label>
+          <input
+            type="text"
+            id="authors"
+            value={editableAuthors}
+            onChange={handleAuthorsChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="source" className="font-medium">Source:</label>
+          <input
+            type="text"
+            id="source"
+            value={editableSource}
+            onChange={handleSourceChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="year" className="font-medium">Publication Year:</label>
+          <input
+            type="text"
+            id="year"
+            value={editableYear}
+            onChange={handleYearChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="doi" className="font-medium">DOI:</label>
+          <input
+            type="text"
+            id="doi"
+            value={editableDOI}
+            onChange={handleDOIChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="claim" className="font-medium">Claim:</label>
+          <textarea
+            id="claim"
+            value={editableClaim}
+            onChange={handleClaimChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+            rows="3"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="evidence" className="font-medium">Evidence:</label>
+          <textarea
+            id="evidence"
+            value={editableEvidence}
+            onChange={handleEvidenceChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+            rows="3"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="status" className="font-medium">Status:</label>
+          <input
+            type="text"
+            id="status"
+            value={editableStatus}
+            onChange={handleStatusChange}
+            className="block w-full p-2 border border-gray-300 rounded mt-1"
+          />
+        </div>
+  
+        <button
+          onClick={updateArticleDetails}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Save Changes
+        </button>
+      </div>
     </div>
   );
+  
 };
 
 export default ArticleAdminPage;
