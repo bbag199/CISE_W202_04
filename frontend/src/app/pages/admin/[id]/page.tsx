@@ -131,7 +131,8 @@ const ArticleAdminPage = () => {
   return (
     <div className="min-h-screen mt-16 p-8 bg-gray-50">
       <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
-        <h1 className="text-2xl font-bold mb-4">Edit Article</h1>
+        <h1 className="text-2xl font-bold mb-4">Administrator Override</h1>
+        <h2 className="text-1xl font-bold mb-4">Modify Article</h2>
   
         <div className="mb-4">
           <label htmlFor="title" className="font-medium">Title:</label>
@@ -211,15 +212,19 @@ const ArticleAdminPage = () => {
         </div>
   
         <div className="mb-4">
-          <label htmlFor="status" className="font-medium">Status:</label>
-          <input
-            type="text"
-            id="status"
-            value={editableStatus}
-            onChange={handleStatusChange}
-            className="block w-full p-2 border border-gray-300 rounded mt-1"
-          />
-        </div>
+  <label htmlFor="status" className="font-medium">Status:</label>
+  <select
+    id="status"
+    value={editableStatus}
+    onChange={handleStatusChange}
+    className="block w-full p-2 border border-gray-300 rounded mt-1"
+  >
+    <option value="Unmoderated">Unmoderated</option>
+    <option value="Moderated">Moderated</option>
+    <option value="Analyzed">Analyzed</option>
+  </select>
+</div>
+
   
         <button
           onClick={updateArticleDetails}
