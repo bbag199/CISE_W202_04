@@ -64,4 +64,10 @@ export class ArticlesService {
   async findByStatus(statusToSearch: string): Promise<Article[]> {
     return this.articleModel.find({ status: statusToSearch }).exec();
   }
+
+  async updateArticle(id: string, updateDto: any): Promise<Article> {
+    return this.articleModel
+      .findByIdAndUpdate(id, updateDto, { new: true })
+      .exec();
+  }
 }
