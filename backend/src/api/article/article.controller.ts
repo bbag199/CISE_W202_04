@@ -60,7 +60,7 @@ export class ArticlesController {
     return this.articlesService.findByStatus('Unmoderated');
   }
 
-  @Patch(':id/rate') // Using PATCH since it's a partial update
+  @Patch(':id/rate') 
   async rateArticle(
     @Param('id') id: string,
     @Body('rating') rating: number,

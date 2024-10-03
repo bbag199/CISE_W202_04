@@ -52,82 +52,63 @@ const ArticleDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen mt-16">
-      <h1><strong>Title: </strong>{article.title}</h1>
-      <p>
-        <strong>Authors: </strong> {article.authors.join(", ")}
-      </p>
-      <p>
-        <strong>Source: </strong> {article.source}
-      </p>
-      <p>
-        <strong>Publication Year: </strong> {article.publicationYear}
-      </p>
-      <p>
-        <strong>DOI: </strong> {article.doi}
-      </p>
-      <p>
-        <strong>Claim: </strong> {article.claim || "N/A"}
-      </p>
-      <p>
-        <strong>Evidence: </strong> {article.evidence || "N/A"}
-      </p>
-
-      <p>
-        <strong>Average Rating: </strong> {averageRating}/5
-      </p>
-
-
-      <p>
-        <strong>Status: </strong> {article.status || "N/A"}
-      </p>
-      <p>
-        <strong>Add Rating: </strong>
-      </p>
-
-      <select
-  id="rating"
-  name="rating"
-  value={newRating}
-  onChange={(e) => setNewRating(Number(e.target.value))}
-  required
-  className="mb-4 p-2 w-full bg-gray-100"
->
-  <option value="0" disabled>Select a rating</option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-</select>
-
-      <button
-  type="button"
-  onClick={async () => {
-    try {
-      const response = await fetch(`http://localhost:8082/articles/${id}/rate`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ rating: newRating }),
-      });
-      if (response.ok) {
-        const updatedArticle = await response.json();
-        setArticle(updatedArticle);
-        alert('Rating added successfully!');
-      } else {
-        console.error('Failed to add rating');
-      }
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-    }
-  }}
-  className="bg-green-500 hover:bg-green-700 text-white p-2 rounded"
->
-  Rate Article
-</button>
-
+    <div className="min-h-screen mt-16 p-8 bg-gray-50">
+      <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
+        <h1 className="text-2xl font-bold mb-4">Title: {article.title}</h1>
+        <p className="mb-2"><strong>Authors:</strong> {article.authors.join(", ")}</p>
+        <p className="mb-2"><strong>Source:</strong> {article.source}</p>
+        <p className="mb-2"><strong>Publication Year:</strong> {article.publicationYear}</p>
+        <p className="mb-2"><strong>DOI:</strong> {article.doi}</p>
+        <p className="mb-2"><strong>Claim:</strong> {article.claim || "N/A"}</p>
+        <p className="mb-2"><strong>Evidence:</strong> {article.evidence || "N/A"}</p>
+        <p className="mb-2"><strong>Average Rating:</strong> {averageRating}/5</p>
+        <p className="mb-2"><strong>Status:</strong> {article.status || "N/A"}</p>
+        
+        <div className="mt-4">
+          <label htmlFor="rating" className="block mb-2 font-medium">Add Rating:</label>
+          <select
+            id="rating"
+            name="rating"
+            value={newRating}
+            onChange={(e) => setNewRating(Number(e.target.value))}
+            required
+            className="mb-4 p-2 w-full bg-gray-200 border border-gray-300 rounded"
+          >
+            <option value="0" disabled>Select a rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <button
+            type="button"
+            onClick={async () => {
+              try {
+                const response = await fetch(`http://localhost:8082/articles/${id}/rate`, {
+                  method: 'PATCH',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ rating: newRating }),
+                });
+                if (response.ok) {
+                  const updatedArticle = await response.json();
+                  setArticle(updatedArticle);
+                  alert('Rating added successfully!');
+                } else {
+                  console.error('Failed to add rating');
+                }
+              } catch (error) {
+                console.error("Error submitting rating:", error);
+              }
+            }}
+            className="inline-block bg-green-500 hover:bg-green-700 text-white font-medium p-2 rounded"
+          >
+            Rate Article
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
