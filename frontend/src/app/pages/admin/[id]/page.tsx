@@ -171,7 +171,7 @@ const ArticleAdminPage = () => {
         </div>
   
         <div className="mb-4">
-          <label htmlFor="claim" className="font-medium">Claim:</label>
+          <label htmlFor="claim" className="font-medium">Claim (multiple claims separated by comma):</label>
           <textarea
             id="claim"
             value={editableClaim}
