@@ -23,10 +23,10 @@ export class Article {
   @Prop({ default: 'Unmoderated' })
   status: string;
 
-  @Prop({ type: [String], default: [] })
+  @Prop({ type: [String], default: ['N/A'] })
   claim: string[];
 
-  @Prop({ default: [] })
+  @Prop({ default: ['N/A'] })
   evidence: string[];
 
   @Prop({ type: Number, min: 1, max: 5, default: 0 })
