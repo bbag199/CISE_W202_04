@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from './article.schema';
@@ -22,19 +22,23 @@ export class ArticlesService {
     return await this.articleModel.findById(id).exec();
   }
 
-  // possible findOne code to only allow access to certain article statuses -Cam
-  //
-  // async findOne(id: string, context: 'moderate' | 'browse' = 'browse'): Promise<Article | null> {
-  //   const article = await this.articleModel.findById(id).exec();
-  //   if (context === 'moderate' && article && article.status !== 'Unmoderated') {
-  //     return null; // Return null if the article is not unmoderated in moderation context
-  //   }
-  //    // could add similar functionality for the browse & analyse contexts
-  //   return article; // Return the article for all other contexts
-  // }
-
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     return await this.articleModel.create(createArticleDto);
+  }
+
+  async addRating(id: string, newRating: number): Promise<Article> {
+    console.log(`Finding article with id: ${id}`);
+    const article = await this.articleModel.findById(id);
+    if (!article) {
+      console.error('Article not found');
+      throw new NotFoundException('Article not found');
+    }
+    console.log(`Adding new rating: ${newRating}`);
+    console.log(`Current ratings before adding: ${article.rating}`);
+    article.rating.push(newRating);
+    await article.save();
+    console.log(`Saved article with new ratings: ${article.rating}`);
+    return article;
   }
 
   async update(
@@ -64,5 +68,11 @@ export class ArticlesService {
   async count(selectedStatus: string): Promise<number> {
     const filter = { status: { $eq: selectedStatus } };
     return this.articleModel.countDocuments(filter).exec();
+  }
+  
+  async updateArticle(id: string, updateDto: any): Promise<Article> {
+    return this.articleModel
+      .findByIdAndUpdate(id, updateDto, { new: true })
+      .exec();
   }
 }

@@ -48,6 +48,9 @@ const Navbar = () => {
                         <Link className="hover:bg-blue-300" href="/pages/analyse">Analyse</Link>
                       </li>
                       <li>
+                        <Link className="hover:bg-blue-300" href="/pages/admin">Admin</Link>
+                      </li>
+                      <li>
                         <button className="hover:bg-blue-300" onClick={handleLogout}>Logout</button>
                       </li>
                     </>

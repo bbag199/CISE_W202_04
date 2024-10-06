@@ -1,4 +1,14 @@
-import { Controller, Get, Query, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { ArticlesService } from './article.service';
 import { CreateArticleDto } from './submit-article.dto';
 import { Article } from './article.schema';
@@ -48,6 +58,22 @@ export class ArticlesController {
   @Get('status/unmoderated')
   async findUnmoderatedArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Unmoderated');
+  }
+
+  @Patch(':id/rate')
+  async rateArticle(
+    @Param('id') id: string,
+    @Body('rating') rating: number,
+  ): Promise<Article> {
+    return this.articlesService.addRating(id, rating);
+  }
+
+  @Patch(':id')
+  updateArticle(
+    @Param('id') id: string,
+    @Body() updateDto: any,
+  ): Promise<Article> {
+    return this.articlesService.updateArticle(id, updateDto);
   }
 
   @Get('status/moderated')
