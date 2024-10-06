@@ -48,8 +48,21 @@ const Dashboard = () => {
 
   }, []);
 
+  if (loading) {
+    return (
+    <div className="min-h-screen flex flex-col items-center pt-5"> {/* Added padding-top to avoid overlap with navbar */}
+    
+      <div className="bg-white p-6 rounded shadow-lg w-full max-w-4xl mx-auto">
+        <h1 className="text-xl font-bold mb-4">Dashboard</h1>
+        <p>Loading...</p>
+      </div>
+
+    </div>
+    )
+  }
+
   if (!isLoggedIn) {
-    return <div>Not logged in</div>;
+    return <div>Not logged in?</div>;
   }
 
   // When logged in (as admin?), show all notifications
@@ -61,21 +74,31 @@ const Dashboard = () => {
     <div className="bg-white p-6 rounded shadow-lg w-full max-w-4xl mx-auto">
       <h1 className="text-xl font-bold mb-4">Dashboard</h1>
 
-      { awaitingModeration && (
+      { awaitingModeration ? (
       <>
-        <label htmlFor="awaitingModeration" className="block mb-2">
-        You have {awaitingModeration} Article{awaitingModeration !== 1 && ("s")} awaiting Moderation
-        </label>
+        <p className="block mb-2">
+        You have {awaitingModeration} Article{awaitingModeration !== 1 && ("s")} awaiting Moderation.
+        </p>
       </>
+      ) : (
+        <p className="block mb-2">
+        No articles are currently awaiting Moderation.
+        </p>
       )}
 
-      { awaitingAnalysis && (
+      { awaitingAnalysis ? (
       <>
-        <label htmlFor="awaitingAnalysis" className="block mb-2">
-        You have {awaitingAnalysis} Article{awaitingAnalysis !== 1 && ("s")} awaiting Analysis
-        </label>
+        <p className="block mb-2">
+        You have {awaitingAnalysis} Article{awaitingAnalysis !== 1 && ("s")} awaiting Analysis.
+        </p>
       </>
+      ) : (
+        <p className="block mb-2">
+        No articles are currently awaiting Analysis.
+        </p>
       )}
+
+      
 
     </div>
   
