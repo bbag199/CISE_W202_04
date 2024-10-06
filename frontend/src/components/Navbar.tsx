@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1 text-3xl font-bold">
             <li>
-              <Link href="/home">Home</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </li>
             <li>
               <details>
