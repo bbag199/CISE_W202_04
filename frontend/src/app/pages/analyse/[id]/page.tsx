@@ -14,7 +14,7 @@ interface Article {
   status: string;
   //claim and evidence
   claim: string[];
-  evidence: string;
+  evidence: string[];
 }
 
 const AnalyzePage = () => {
@@ -27,8 +27,8 @@ const AnalyzePage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
 
   //state for claim and evidence
-  const [claim, setClaim] = useState<string[]>([""]);
-  const [evidence, setEvidence] = useState<string>("");
+  const [claim, setClaim] = useState<string[]>(["N/A"]);
+  const [evidence, setEvidence] = useState<string[]>(["N/A"]);
 
   const articleId = Array.isArray(id) ? id[0] : id;
 
@@ -54,8 +54,8 @@ const AnalyzePage = () => {
       if (articleData && articleData.status === "Moderated") {
         setDisplayedArticle(articleData);
         //pre-fill claim and evidence
-        setClaim(articleData.claim || [""]);
-        setEvidence(articleData.evidence || "");
+        setClaim(articleData.claim || ["N/A"]);
+        setEvidence(articleData.evidence || ["N/A"]);
       } else {
         console.log(articleData);
         console.log(articleData.status);
@@ -76,6 +76,7 @@ const AnalyzePage = () => {
     try {
 
       const concatClaim = claim.join(', ');
+      const concatEvidence = evidence.join(',');
 
       const response = await fetch(
         `http://localhost:8082/articles/${displayedArticle!._id}`,
@@ -88,7 +89,7 @@ const AnalyzePage = () => {
             ...displayedArticle,
             status: "Analyzed",
             claim: concatClaim,
-            evidence: evidence,
+            evidence: concatEvidence,
           }),
         }
       );
@@ -117,9 +118,28 @@ const AnalyzePage = () => {
   };
 
   const removeClaimField = (index: number) => {
-    const newClaims = claim.filter((_, i) => i !== index);
-    setClaim(newClaims);
+    if (claim.length > 1) {
+      const newClaims = claim.filter((_, i) => i !== index);
+      setClaim(newClaims);
+    }
   };
+
+  const handleEvidenceChange = (index: number, value: string) => {
+    const newEvidence = [...evidence];
+    newEvidence[index] = value;
+    setEvidence(newEvidence);
+  };
+
+  const addEvidenceField = () => {
+    setEvidence([...evidence, ""]);
+  };
+
+  const removeEvidenceField = (index: number) => {
+    if (evidence.length > 1) {
+    const newEvidence = evidence.filter((_, i) => i !== index);
+    setEvidence(newEvidence);
+    }
+  }
 
   if (loadingArticle) {
     return <p>Loading...</p>;
@@ -190,13 +210,31 @@ const AnalyzePage = () => {
 
         <div>
           <label>Evidence</label>
-          <textarea
-            value={evidence}
-            onChange={(e) => setEvidence(e.target.value)}
-            placeholder="Evidence"
-            className="border p-2 rounded w-full"
-            required
-          />
+          {evidence.map((evidence, index) => (
+            <div key={index} className="mb-2">
+              <textarea
+                value={evidence}
+                onChange={(e) => handleEvidenceChange(index, e.target.value)}
+                placeholder="Enter evidence"
+                className="border p-2 rounded w-full"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => removeEvidenceField(index)}
+                className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+              >
+                Remove Evidence
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addEvidenceField}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Add Evidence
+          </button>   
         </div>
 
         <div className="flex space-x-4 mt-4">
