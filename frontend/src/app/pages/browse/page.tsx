@@ -23,6 +23,7 @@ interface Article {
 const BrowsePage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchType, setSearchType] = useState<'title' | 'sePractice'>('title'); 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -30,12 +31,12 @@ const BrowsePage = () => {
       fetchArticles();
     } else {
       const delayDebounceFn = setTimeout(() => {
-        searchArticles(searchTerm);
+        searchArticles(searchTerm, searchType);
       }, 300);
 
       return () => clearTimeout(delayDebounceFn);
     }
-  }, [searchTerm]);
+  }, [searchTerm, searchType]);
 
   const fetchArticles = async () => {
     setIsLoading(true);
@@ -50,10 +51,13 @@ const BrowsePage = () => {
     }
   };
 
-  const searchArticles = async (title: string) => {
+  const searchArticles = async (term: string, type: 'title' | 'sePractice') => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:8082/articles/search?title=${title}`);
+      const query = new URLSearchParams();
+      query.append(type, term);
+
+      const response = await fetch(`http://localhost:8082/articles/search?${query.toString()}`);
       const data = await response.json();
       setArticles(data);
     } catch (error) {
@@ -65,6 +69,11 @@ const BrowsePage = () => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleSearchTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchType(e.target.value as 'title' | 'sePractice');
+    setSearchTerm('');
   };
 
   const calculateAverageRating = (ratings: number[]) => {
@@ -85,9 +94,32 @@ const BrowsePage = () => {
           value={searchTerm}
           onChange={handleSearchChange}
           className="block w-full md:w-2/3 lg:w-1/2 xl:w-3/4 rounded-full border border-solid border-neutral-300 bg-white px-6 py-3 text-base font-normal leading-6 text-neutral-700 outline-none shadow-md transition duration-200 ease-in-out focus:z-[3] focus:border-blue-500 focus:ring focus:ring-blue-300 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-blue-500"
-          placeholder="Search for an article by title..."
+          placeholder={`Search by ${searchType === 'title' ? 'title' : 'SE Practice'}...`}
           aria-label="Search"
         />
+      </div>
+
+      <div className="flex justify-center mt-4">
+        <label className="mr-4">
+          <input
+            type="radio"
+            name="searchType"
+            value="title"
+            checked={searchType === 'title'}
+            onChange={handleSearchTypeChange}
+          />
+          Search by Title
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="searchType"
+            value="sePractice"
+            checked={searchType === 'sePractice'}
+            onChange={handleSearchTypeChange}
+          />
+           Search by SE Practice
+        </label>
       </div>
 
       <div className="mt-16">
@@ -101,7 +133,7 @@ const BrowsePage = () => {
                   <th className="border px-4 py-2 text-left font-bold w-1/5">Title</th>
                   <th className="border px-4 py-2 text-left font-bold w-1/5">Authors</th>
                   <th className="border px-4 py-2 text-left font-bold w-1/10">Year</th>
-                  <th className="border px-4 py-2 text-left font-bold w-1/5">SE Practice</th>                  
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">SE Practice</th>
                   <th className="border px-4 py-2 text-left font-bold w-1/10">Rating</th>
                 </tr>
               </thead>
@@ -111,10 +143,10 @@ const BrowsePage = () => {
                     <tr key={article._id}>
                       <td className="border px-4 py-2 truncate">
                         <Link
-                        href={`/pages/browse/${article._id}`}
-                        className="text-blue-600 hover:underline"
+                          href={`/pages/browse/${article._id}`}
+                          className="text-blue-600 hover:underline"
                         >
-                        {article.title}
+                          {article.title}
                         </Link>
                       </td>
                       <td className="border px-4 py-2 truncate">{article.authors.join(', ')}</td>
