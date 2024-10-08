@@ -189,7 +189,7 @@ const AnalyzePage = () => {
                 value={claimValue}
                 onChange={(e) => handleClaimChange(index, e.target.value)}
                 placeholder="Enter claim"
-                className="border p-2 rounded w-full"
+                className="border p-2 rounded w-full bg-gray-100"
                 required
               />
               {claim.length > 1 && (
@@ -211,6 +211,8 @@ const AnalyzePage = () => {
             Add Claim
           </button>
         </div>
+        
+        <br />
 
         <div>
           <label>Evidence</label>
@@ -221,7 +223,7 @@ const AnalyzePage = () => {
                 value={evidenceValue}
                 onChange={(e) => handleEvidenceChange(index, e.target.value)}
                 placeholder="Enter evidence"
-                className="border p-2 rounded w-full"
+                className="border p-2 rounded w-full bg-gray-100"
                 required
               />
               {evidence.length > 1 && (
@@ -244,6 +246,8 @@ const AnalyzePage = () => {
             Add Evidence
           </button>   
         </div>
+        
+        <br />
 
         <div className="flex space-x-4 mt-4">
           <button
