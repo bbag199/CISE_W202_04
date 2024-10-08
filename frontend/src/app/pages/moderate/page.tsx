@@ -94,10 +94,10 @@ const BrowsePage = () => {
                     </td>
                     <td className="border px-4 py-2">{article.doi}</td>
                     <td className="border px-4 py-2">
-                      {article.claim || "N/A"}
+                    { article.claim.length > 0 ? article.claim : "N/A" }
                     </td>
                     <td className="border px-4 py-2">
-                      {article.evidence || "N/A"}
+                    { article.evidence.length > 0 ? article.evidence : "N/A" }
                     </td>
                     <td className="border px-4 py-2">{article.rating}/5</td>
                     <td className="border px-4 py-2">

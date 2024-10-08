@@ -27,8 +27,8 @@ const AnalyzePage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
 
   //state for claim and evidence
-  const [claim, setClaim] = useState<string[]>(["N/A"]);
-  const [evidence, setEvidence] = useState<string[]>(["N/A"]);
+  const [claim, setClaim] = useState<string[]>([]);
+  const [evidence, setEvidence] = useState<string[]>([]);
 
   const articleId = Array.isArray(id) ? id[0] : id;
 
