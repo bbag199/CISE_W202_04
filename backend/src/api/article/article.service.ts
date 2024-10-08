@@ -65,6 +65,11 @@ export class ArticlesService {
     return this.articleModel.find({ status: statusToSearch }).exec();
   }
 
+  async count(selectedStatus: string): Promise<number> {
+    const filter = { status: { $eq: selectedStatus } };
+    return this.articleModel.countDocuments(filter).exec();
+  }
+  
   async updateArticle(id: string, updateDto: any): Promise<Article> {
     return this.articleModel
       .findByIdAndUpdate(id, updateDto, { new: true })

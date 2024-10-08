@@ -80,4 +80,9 @@ export class ArticlesController {
   async findArticlesArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Moderated');
   }
+
+  @Get('count/:status')
+  async count(@Param('status') selected_status: string): Promise<number> {
+    return this.articlesService.count(selected_status);
+  }
 }
