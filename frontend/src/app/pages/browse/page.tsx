@@ -10,9 +10,14 @@ interface Article {
   source: string;
   publicationYear: string;
   doi: string;
-  claim: string;
-  evidence: string;
+  claim: string[];
+  evidence: string[];
   rating: number[];
+  journalConferenceName: string;
+  sePractice: string;
+  evidenceResult: string;
+  researchType: string;
+  participantType: string;
 }
 
 const BrowsePage = () => {
@@ -93,21 +98,18 @@ const BrowsePage = () => {
             <table className="min-w-full table-auto border border-blue-300">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="border px-4 py-2 text-left font-bold">Title</th>
-                  <th className="border px-4 py-2 text-left font-bold">Authors</th>
-                  <th className="border px-4 py-2 text-left font-bold">Source</th>
-                  <th className="border px-4 py-2 text-left font-bold">Year</th>
-                  <th className="border px-4 py-2 text-left font-bold">DOI</th>
-                  <th className="border px-4 py-2 text-left font-bold">Claim</th>
-                  <th className="border px-4 py-2 text-left font-bold">Evidence</th>
-                  <th className="border px-4 py-2 text-left font-bold">Rating</th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">Title</th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">Authors</th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/10">Year</th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">SE Practice</th>                  
+                  <th className="border px-4 py-2 text-left font-bold w-1/10">Rating</th>
                 </tr>
               </thead>
               <tbody>
                 {articles.length > 0 ? (
                   articles.map((article) => (
                     <tr key={article._id}>
-                      <td className="border px-4 py-2">
+                      <td className="border px-4 py-2 truncate">
                         <Link
                         href={`/pages/browse/${article._id}`}
                         className="text-blue-600 hover:underline"
@@ -115,18 +117,15 @@ const BrowsePage = () => {
                         {article.title}
                         </Link>
                       </td>
-                      <td className="border px-4 py-2">{article.authors.join(', ')}</td>
-                      <td className="border px-4 py-2">{article.source}</td>
-                      <td className="border px-4 py-2">{article.publicationYear}</td>
-                      <td className="border px-4 py-2">{article.doi}</td>
-                      <td className="border px-4 py-2">{article.claim || 'N/A'}</td>
-                      <td className="border px-4 py-2">{article.evidence || 'N/A'}</td>
-                      <td className="border px-4 py-2">{calculateAverageRating(article.rating)}</td>
+                      <td className="border px-4 py-2 truncate">{article.authors.join(', ')}</td>
+                      <td className="border px-4 py-2 truncate">{article.publicationYear}</td>
+                      <td className="border px-4 py-2 truncate">{article.sePractice || 'N/A'}</td>
+                      <td className="border px-4 py-2 truncate">{calculateAverageRating(article.rating)}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={8} className="text-center">No articles found.</td>
+                    <td colSpan={13} className="text-center">No articles found.</td>
                   </tr>
                 )}
               </tbody>
