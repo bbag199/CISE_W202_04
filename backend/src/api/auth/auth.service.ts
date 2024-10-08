@@ -13,15 +13,18 @@ export class AuthService {
   // validate user by checking username and password
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findByUsername(username);
-    
-    if (user && await bcrypt.compare(password, user.password)) {
+
+    if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;
     }
   }
-  
+
   // login function (basic session or basic auth)
-  async login(username: string, password: string): Promise<{ access_token: string }> {
+  async login(
+    username: string,
+    password: string,
+  ): Promise<{ access_token: string }> {
     const user = await this.validateUser(username, password);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');

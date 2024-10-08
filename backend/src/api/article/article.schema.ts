@@ -29,8 +29,8 @@ export class Article {
   @Prop({ default: [] })
   evidence: string[];
 
-  @Prop({ type: Number, min: 1, max: 5, default: 0 })
-  rating: number;
+  @Prop({ required: true, default: [] })
+  rating: number[];
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

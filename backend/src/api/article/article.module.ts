@@ -12,4 +12,3 @@ import { Article, ArticleSchema } from './article.schema';
   providers: [ArticlesService],
 })
 export class ArticlesModule {}
-

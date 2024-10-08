@@ -151,7 +151,7 @@ const AnalyzePage = () => {
   }
 
   return (
-    <>
+    <div className="min-h-screen">
       <p>Analysis Page</p>
 
       <br />
@@ -260,7 +260,7 @@ const AnalyzePage = () => {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 
