@@ -107,9 +107,9 @@ const AnalyzePage = () => {
     }
   };
   //
-  const handleClaimChange = (index: number, value: string) => {
+  const handleClaimChange = (index: number, newValue: string) => {
     const newClaim = [...claim];
-    newClaim[index] = value;
+    newClaim[index] = newValue;
     setClaim(newClaim);
   };
   //
@@ -119,7 +119,8 @@ const AnalyzePage = () => {
 
   const removeClaimField = (index: number) => {
     if (claim.length > 1) {
-      const newClaims = claim.filter((_, i) => i !== index);
+      const newClaims = [...claim];
+      newClaims.splice(index, 1);
       setClaim(newClaims);
     }
   };
@@ -181,22 +182,25 @@ const AnalyzePage = () => {
         {/*Text fields from claims and evd */}
         <div>
           <label>Claim</label>
-          {claim.map((claim, index) => (
+          {claim.map((claimValue, index) => (
             <div key={index} className="mb-2">
-              <textarea
-                value={claim}
+              <input
+                type="text"
+                value={claimValue}
                 onChange={(e) => handleClaimChange(index, e.target.value)}
                 placeholder="Enter claim"
                 className="border p-2 rounded w-full"
                 required
               />
-              <button
-                type="button"
-                onClick={() => removeClaimField(index)}
-                className="bg-red-500 text-white px-2 py-1 rounded mt-2"
-              >
-                Remove Claim
-              </button>
+              {claim.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeClaimField(index)}
+                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+                >
+                  Remove Claim
+                </button>
+              )}
             </div>
           ))}
           <button
@@ -210,24 +214,28 @@ const AnalyzePage = () => {
 
         <div>
           <label>Evidence</label>
-          {evidence.map((evidence, index) => (
+          {evidence.map((evidenceValue, index) => (
             <div key={index} className="mb-2">
-              <textarea
-                value={evidence}
+              <input
+                type="text"
+                value={evidenceValue}
                 onChange={(e) => handleEvidenceChange(index, e.target.value)}
                 placeholder="Enter evidence"
                 className="border p-2 rounded w-full"
                 required
               />
-              <button
-                type="button"
-                onClick={() => removeEvidenceField(index)}
-                className="bg-red-500 text-white px-2 py-1 rounded mt-2"
-              >
-                Remove Evidence
-              </button>
+              {evidence.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeEvidenceField(index)}
+                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+                >
+                  Remove Evidence
+                </button>
+              )}
             </div>
           ))}
+          
           <button
             type="button"
             onClick={addEvidenceField}
