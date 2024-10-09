@@ -1,11 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 import { useAuth } from "../../context/AuthContext";
 
 const Dashboard = () => {
 
+  useRequireAuth();
+  
   const { isLoggedIn } = useAuth();
 
   const [awaitingModeration, setAwaitingModeration] = useState<number | null>(null);
