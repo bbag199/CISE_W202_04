@@ -76,7 +76,7 @@ const AnalyzePage = () => {
     try {
 
       const concatClaim = claim.join(', ');
-      const concatEvidence = evidence.join(',');
+      const concatEvidence = evidence.join(', ');
 
       const response = await fetch(
         `http://localhost:8082/articles/${displayedArticle!._id}`,
