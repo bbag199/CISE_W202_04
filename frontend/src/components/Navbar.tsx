@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1 text-3xl font-bold">
             <li>
-              <Link href="/home">Home</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </li>
             <li>
               <details>
@@ -46,6 +46,9 @@ const Navbar = () => {
                       </li>
                       <li>
                         <Link className="hover:bg-blue-300" href="/pages/analyse">Analyse</Link>
+                      </li>
+                      <li>
+                        <Link className="hover:bg-blue-300" href="/pages/admin">Admin</Link>
                       </li>
                       <li>
                         <button className="hover:bg-blue-300" onClick={handleLogout}>Logout</button>

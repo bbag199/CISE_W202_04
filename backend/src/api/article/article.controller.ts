@@ -63,7 +63,7 @@ export class ArticlesController {
     return this.articlesService.findByStatus('Unmoderated');
   }
 
-  @Patch(':id/rate') 
+  @Patch(':id/rate')
   async rateArticle(
     @Param('id') id: string,
     @Body('rating') rating: number,
@@ -71,8 +71,21 @@ export class ArticlesController {
     return this.articlesService.addRating(id, rating);
   }
 
+  @Patch(':id')
+  updateArticle(
+    @Param('id') id: string,
+    @Body() updateDto: any,
+  ): Promise<Article> {
+    return this.articlesService.updateArticle(id, updateDto);
+  }
+
   @Get('status/moderated')
   async findArticlesArticles(): Promise<Article[]> {
     return this.articlesService.findByStatus('Moderated');
+  }
+
+  @Get('count/:status')
+  async count(@Param('status') selected_status: string): Promise<number> {
+    return this.articlesService.count(selected_status);
   }
 }
