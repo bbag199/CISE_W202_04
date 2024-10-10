@@ -172,8 +172,6 @@ const AnalyzePage = () => {
           </a>
         </h3>
         <h4>Article ID: {displayedArticle._id}</h4>
-
-        <h4> Claims: {displayedArticle.claim.join(", ")}</h4>
       </div>
 
       <br />
