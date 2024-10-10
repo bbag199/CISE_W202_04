@@ -14,7 +14,7 @@ interface Article {
   status: string;
   //claim and evidence
   claim: string[];
-  evidence: string;
+  evidence: string[];
 }
 
 const AnalyzePage = () => {
@@ -27,8 +27,8 @@ const AnalyzePage = () => {
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
 
   //state for claim and evidence
-  const [claim, setClaim] = useState<string[]>([""]);
-  const [evidence, setEvidence] = useState<string>("");
+  const [claim, setClaim] = useState<string[]>([]);
+  const [evidence, setEvidence] = useState<string[]>([]);
 
   const articleId = Array.isArray(id) ? id[0] : id;
 
@@ -54,8 +54,8 @@ const AnalyzePage = () => {
       if (articleData && articleData.status === "Moderated") {
         setDisplayedArticle(articleData);
         //pre-fill claim and evidence
-        setClaim(articleData.claim || [""]);
-        setEvidence(articleData.evidence || "");
+        setClaim(articleData.claim || ["N/A"]);
+        setEvidence(articleData.evidence || ["N/A"]);
       } else {
         console.log(articleData);
         console.log(articleData.status);
@@ -72,7 +72,12 @@ const AnalyzePage = () => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoadingSubmit(true);
+    
     try {
+
+      const concatClaim = claim.join(', ');
+      const concatEvidence = evidence.join(', ');
+
       const response = await fetch(
         `http://localhost:8082/articles/${displayedArticle!._id}`,
         {
@@ -83,8 +88,8 @@ const AnalyzePage = () => {
           body: JSON.stringify({
             ...displayedArticle,
             status: "Analyzed",
-            claim: claim,
-            evidence: evidence,
+            claim: concatClaim,
+            evidence: concatEvidence,
           }),
         }
       );
@@ -102,9 +107,9 @@ const AnalyzePage = () => {
     }
   };
   //
-  const handleClaimChange = (index: number, value: string) => {
+  const handleClaimChange = (index: number, newValue: string) => {
     const newClaim = [...claim];
-    newClaim[index] = value;
+    newClaim[index] = newValue;
     setClaim(newClaim);
   };
   //
@@ -113,9 +118,29 @@ const AnalyzePage = () => {
   };
 
   const removeClaimField = (index: number) => {
-    const newClaims = claim.filter((_, i) => i !== index);
-    setClaim(newClaims);
+    if (claim.length > 1) {
+      const newClaims = [...claim];
+      newClaims.splice(index, 1);
+      setClaim(newClaims);
+    }
   };
+
+  const handleEvidenceChange = (index: number, value: string) => {
+    const newEvidence = [...evidence];
+    newEvidence[index] = value;
+    setEvidence(newEvidence);
+  };
+
+  const addEvidenceField = () => {
+    setEvidence([...evidence, ""]);
+  };
+
+  const removeEvidenceField = (index: number) => {
+    if (evidence.length > 1) {
+    const newEvidence = evidence.filter((_, i) => i !== index);
+    setEvidence(newEvidence);
+    }
+  }
 
   if (loadingArticle) {
     return <p>Loading...</p>;
@@ -155,22 +180,25 @@ const AnalyzePage = () => {
         {/*Text fields from claims and evd */}
         <div>
           <label>Claim</label>
-          {claim.map((claim, index) => (
+          {claim.map((claimValue, index) => (
             <div key={index} className="mb-2">
-              <textarea
-                value={claim}
+              <input
+                type="text"
+                value={claimValue}
                 onChange={(e) => handleClaimChange(index, e.target.value)}
                 placeholder="Enter claim"
-                className="border p-2 rounded w-full"
+                className="border p-2 rounded w-full bg-gray-100"
                 required
               />
-              <button
-                type="button"
-                onClick={() => removeClaimField(index)}
-                className="bg-red-500 text-white px-2 py-1 rounded mt-2"
-              >
-                Remove Claim
-              </button>
+              {claim.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeClaimField(index)}
+                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+                >
+                  Remove Claim
+                </button>
+              )}
             </div>
           ))}
           <button
@@ -181,17 +209,43 @@ const AnalyzePage = () => {
             Add Claim
           </button>
         </div>
+        
+        <br />
 
         <div>
           <label>Evidence</label>
-          <textarea
-            value={evidence}
-            onChange={(e) => setEvidence(e.target.value)}
-            placeholder="Evidence"
-            className="border p-2 rounded w-full"
-            required
-          />
+          {evidence.map((evidenceValue, index) => (
+            <div key={index} className="mb-2">
+              <input
+                type="text"
+                value={evidenceValue}
+                onChange={(e) => handleEvidenceChange(index, e.target.value)}
+                placeholder="Enter evidence"
+                className="border p-2 rounded w-full bg-gray-100"
+                required
+              />
+              {evidence.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeEvidenceField(index)}
+                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+                >
+                  Remove Evidence
+                </button>
+              )}
+            </div>
+          ))}
+          
+          <button
+            type="button"
+            onClick={addEvidenceField}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Add Evidence
+          </button>   
         </div>
+        
+        <br />
 
         <div className="flex space-x-4 mt-4">
           <button
