@@ -31,4 +31,24 @@ export class CreateArticleDto {
 
   @IsOptional()
   rating?: number[];
+
+  @IsString()
+  @IsNotEmpty()
+  journalConferenceName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  sePractice: string;
+
+  @IsString()
+  @IsNotEmpty()
+  evidenceResult: string;
+
+  @IsString()
+  @IsNotEmpty()
+  researchType: string;
+
+  @IsString()
+  @IsNotEmpty()
+  participantType: string;
 }

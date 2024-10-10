@@ -10,18 +10,21 @@ interface Article {
   source: string;
   publicationYear: string;
   doi: string;
-  claim: string;
-  evidence: string;
+  claim: string[];
+  evidence: string[];
   rating: number[];
   status: string;
-  
+  journalConferenceName: string;
+  sePractice: string;
+  evidenceResult: string;
+  researchType: string;
+  participantType: string;
 }
 
 const ArticleDetailsPage = () => {
   const { id } = useParams();
   const [article, setArticle] = useState<Article | null>(null);
   const [newRating, setNewRating] = useState<number>(0);
-
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -47,10 +50,6 @@ const ArticleDetailsPage = () => {
     ? (article.rating.reduce((acc, curr) => acc + curr, 0) / article.rating.length).toFixed(1)
     : "No ratings yet";
 
-  if (!article) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="min-h-screen mt-16 p-8 bg-gray-50">
       <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
@@ -59,11 +58,16 @@ const ArticleDetailsPage = () => {
         <p className="mb-2"><strong>Source:</strong> {article.source}</p>
         <p className="mb-2"><strong>Publication Year:</strong> {article.publicationYear}</p>
         <p className="mb-2"><strong>DOI:</strong> {article.doi}</p>
-        <p className="mb-2"><strong>Claim:</strong> {article.claim || "N/A"}</p>
-        <p className="mb-2"><strong>Evidence:</strong> {article.evidence || "N/A"}</p>
+        <p className="mb-2"><strong>Claim:</strong> {article.claim.length > 0 ? article.claim.join(", ") : "N/A"}</p>
+        <p className="mb-2"><strong>Evidence:</strong> {article.evidence.length > 0 ? article.evidence.join(", ") : "N/A"}</p>
         <p className="mb-2"><strong>Average Rating:</strong> {averageRating}/5</p>
         <p className="mb-2"><strong>Status:</strong> {article.status || "N/A"}</p>
-        
+        <p className="mb-2"><strong>Journal/Conference Name:</strong> {article.journalConferenceName}</p>
+        <p className="mb-2"><strong>SE Practice:</strong> {article.sePractice}</p>
+        <p className="mb-2"><strong>Evidence Result:</strong> {article.evidenceResult}</p>
+        <p className="mb-2"><strong>Research Type:</strong> {article.researchType}</p>
+        <p className="mb-2"><strong>Participant Type:</strong> {article.participantType}</p>
+
         <div className="mt-4">
           <label htmlFor="rating" className="block mb-2 font-medium">Add Rating:</label>
           <select

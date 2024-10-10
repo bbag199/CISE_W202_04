@@ -13,7 +13,7 @@ interface Article {
   doi: string;
   claim: string;
   evidence: string;
-  rating: number;
+  rating: number[];
   status: string;
 }
 
@@ -43,6 +43,12 @@ const BrowsePage = () => {
 
     fetchArticles();
   }, []);
+
+  const calculateAverageRating = (ratings: number[]) => {
+    if (ratings.length === 0) return 'No ratings';
+    const average = ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
+    return average.toFixed(1); // Rounds to one decimal place
+  };
 
   return (
     <div className="min-h-screen mt-16">
@@ -74,6 +80,11 @@ const BrowsePage = () => {
             </thead>
             <tbody>
               {/* Render the article rows based on search results */}
+
+       
+   
+
+      
               {articles.length > 0 ? (
                 articles.map((article) => (
                   <tr key={article._id}>
@@ -99,7 +110,8 @@ const BrowsePage = () => {
                     <td className="border px-4 py-2">
                     { article.evidence.length > 0 ? article.evidence : "N/A" }
                     </td>
-                    <td className="border px-4 py-2">{article.rating}/5</td>
+                    
+                    <td className="border px-4 py-2">{calculateAverageRating(article.rating)}/5</td>
                     <td className="border px-4 py-2">
                       {article.status || "N/A"}
                     </td>

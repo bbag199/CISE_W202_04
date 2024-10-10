@@ -31,6 +31,21 @@ export class Article {
 
   @Prop({ required: true, default: [] })
   rating: number[];
+
+  @Prop({ required: true })
+  journalConferenceName: string;
+
+  @Prop({ required: true })
+  sePractice: string;
+
+  @Prop({ required: true })
+  evidenceResult: string; 
+
+  @Prop({ required: true })
+  researchType: string; 
+
+  @Prop({ required: true })
+  participantType: string;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

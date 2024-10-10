@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    router.push("/home");
+    router.push("/pages/login");
   };
 
   return (
@@ -22,9 +22,11 @@ const Navbar = () => {
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1 text-3xl font-bold">
+            {isLoggedIn && (
             <li>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/">Dashboard</Link>
             </li>
+            )}
             <li>
               <details>
                 <summary>Menu</summary>
