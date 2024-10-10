@@ -1,6 +1,6 @@
-'use client'; // Mark this component as a client component
+"use client"; // Mark this component as a client component
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface Article {
@@ -22,12 +22,14 @@ interface Article {
 
 const BrowsePage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchType, setSearchType] = useState<'title' | 'sePractice'>('title'); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState<
+    "title" | "sePractice" | "publicationYear"
+  >("title");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (searchTerm === '') {
+    if (searchTerm === "") {
       fetchArticles();
     } else {
       const delayDebounceFn = setTimeout(() => {
@@ -41,27 +43,32 @@ const BrowsePage = () => {
   const fetchArticles = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8082/articles');
+      const response = await fetch("http://localhost:8082/articles");
       const data = await response.json();
       setArticles(data);
     } catch (error) {
-      console.error('Error fetching articles:', error);
+      console.error("Error fetching articles:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const searchArticles = async (term: string, type: 'title' | 'sePractice') => {
+  const searchArticles = async (
+    term: string,
+    type: "title" | "sePractice" | "publicationYear"
+  ) => {
     setIsLoading(true);
     try {
       const query = new URLSearchParams();
       query.append(type, term);
 
-      const response = await fetch(`http://localhost:8082/articles/search?${query.toString()}`);
+      const response = await fetch(
+        `http://localhost:8082/articles/search?${query.toString()}`
+      );
       const data = await response.json();
       setArticles(data);
     } catch (error) {
-      console.error('Error searching articles:', error);
+      console.error("Error searching articles:", error);
     } finally {
       setIsLoading(false);
     }
@@ -72,12 +79,12 @@ const BrowsePage = () => {
   };
 
   const handleSearchTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchType(e.target.value as 'title' | 'sePractice');
-    setSearchTerm('');
+    setSearchType(e.target.value as "title" | "sePractice" | "publicationYear");
+    setSearchTerm("");
   };
 
   const calculateAverageRating = (ratings: number[]) => {
-    if (ratings.length === 0) return 'No ratings';
+    if (ratings.length === 0) return "No ratings";
     const sum = ratings.reduce((acc, curr) => acc + curr, 0);
     const average = (sum / ratings.length).toFixed(1);
     return `${average}/5`;
@@ -94,7 +101,9 @@ const BrowsePage = () => {
           value={searchTerm}
           onChange={handleSearchChange}
           className="block w-full md:w-2/3 lg:w-1/2 xl:w-3/4 rounded-full border border-solid border-neutral-300 bg-white px-6 py-3 text-base font-normal leading-6 text-neutral-700 outline-none shadow-md transition duration-200 ease-in-out focus:z-[3] focus:border-blue-500 focus:ring focus:ring-blue-300 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-blue-500"
-          placeholder={`Search by ${searchType === 'title' ? 'title' : 'SE Practice'}...`}
+          placeholder={`Search by ${
+            searchType === "title" ? "title" : "SE Practice"
+          }...`}
           aria-label="Search"
         />
       </div>
@@ -105,20 +114,30 @@ const BrowsePage = () => {
             type="radio"
             name="searchType"
             value="title"
-            checked={searchType === 'title'}
+            checked={searchType === "title"}
             onChange={handleSearchTypeChange}
           />
           Search by Title
         </label>
-        <label>
+        <label className="mr-4">
           <input
             type="radio"
             name="searchType"
             value="sePractice"
-            checked={searchType === 'sePractice'}
+            checked={searchType === "sePractice"}
             onChange={handleSearchTypeChange}
           />
-           Search by SE Practice
+          Search by SE Practice
+        </label>
+        <label className="mr-4">
+          <input
+            type="radio"
+            name="searchType"
+            value="publicationYear"
+            checked={searchType === "publicationYear"}
+            onChange={handleSearchTypeChange}
+          />
+          Search by Year
         </label>
       </div>
 
@@ -130,11 +149,21 @@ const BrowsePage = () => {
             <table className="min-w-full table-auto border border-blue-300">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="border px-4 py-2 text-left font-bold w-1/5">Title</th>
-                  <th className="border px-4 py-2 text-left font-bold w-1/5">Authors</th>
-                  <th className="border px-4 py-2 text-left font-bold w-1/10">Year</th>
-                  <th className="border px-4 py-2 text-left font-bold w-1/5">SE Practice</th>
-                  <th className="border px-4 py-2 text-left font-bold w-1/10">Rating</th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">
+                    Title
+                  </th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">
+                    Authors
+                  </th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/10">
+                    Year
+                  </th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/5">
+                    SE Practice
+                  </th>
+                  <th className="border px-4 py-2 text-left font-bold w-1/10">
+                    Rating
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -149,15 +178,25 @@ const BrowsePage = () => {
                           {article.title}
                         </Link>
                       </td>
-                      <td className="border px-4 py-2 truncate">{article.authors.join(', ')}</td>
-                      <td className="border px-4 py-2 truncate">{article.publicationYear}</td>
-                      <td className="border px-4 py-2 truncate">{article.sePractice || 'N/A'}</td>
-                      <td className="border px-4 py-2 truncate">{calculateAverageRating(article.rating)}</td>
+                      <td className="border px-4 py-2 truncate">
+                        {article.authors.join(", ")}
+                      </td>
+                      <td className="border px-4 py-2 truncate">
+                        {article.publicationYear}
+                      </td>
+                      <td className="border px-4 py-2 truncate">
+                        {article.sePractice || "N/A"}
+                      </td>
+                      <td className="border px-4 py-2 truncate">
+                        {calculateAverageRating(article.rating)}
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={13} className="text-center">No articles found.</td>
+                    <td colSpan={13} className="text-center">
+                      No articles found.
+                    </td>
                   </tr>
                 )}
               </tbody>
