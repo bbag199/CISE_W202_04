@@ -59,7 +59,7 @@ export class ArticlesService {
     const query: any = {};
 
     if (title) {
-      query.title = { $regex: title, $options: 'i' }; 
+      query.title = { $regex: title, $options: 'i' };
     }
 
     if (sePractice) {
@@ -69,7 +69,6 @@ export class ArticlesService {
     return this.articleModel.find(query).exec();
   }
 
-
   async findByStatus(statusToSearch: string): Promise<Article[]> {
     return this.articleModel.find({ status: statusToSearch }).exec();
   }
@@ -78,7 +77,7 @@ export class ArticlesService {
     const filter = { status: { $eq: selectedStatus } };
     return this.articleModel.countDocuments(filter).exec();
   }
-  
+
   async updateArticle(id: string, updateDto: any): Promise<Article> {
     return this.articleModel
       .findByIdAndUpdate(id, updateDto, { new: true })
