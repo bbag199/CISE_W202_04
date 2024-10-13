@@ -10,6 +10,11 @@ interface Article {
   publicationYear: string;
   doi: string;
   rating: number[];
+  journalConferenceName: string;
+  sePractice: string;
+  evidenceResult: string;
+  researchType: string;
+  participantType: string;
 }
 
 const DefaultEmptyArticle: Article = {
@@ -19,7 +24,13 @@ const DefaultEmptyArticle: Article = {
   publicationYear: "",
   doi: "",
   rating: [],
+  journalConferenceName: "",
+  sePractice: "",
+  evidenceResult: "",
+  researchType: "",
+  participantType: "",
 };
+
 
 const SubmitArticlePage = () => {
   useRequireAuth();
@@ -218,6 +229,73 @@ const SubmitArticlePage = () => {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
+
+
+
+        <label htmlFor="journalConferenceName" className="block mb-2">
+  Journal/Conference Name:
+</label>
+<input
+  type="text"
+  id="journalConferenceName"
+  name="journalConferenceName"
+  value={article.journalConferenceName}
+  onChange={onChange}
+  required
+  className="mb-4 p-2 w-full bg-gray-100"
+/>
+
+<label htmlFor="sePractice" className="block mb-2">
+  SE Practice:
+</label>
+<input
+  type="text"
+  id="sePractice"
+  name="sePractice"
+  value={article.sePractice}
+  onChange={onChange}
+  required
+  className="mb-4 p-2 w-full bg-gray-100"
+/>
+
+<label htmlFor="evidenceResult" className="block mb-2">
+  Evidence Result:
+</label>
+<input
+  type="text"
+  id="evidenceResult"
+  name="evidenceResult"
+  value={article.evidenceResult}
+  onChange={onChange}
+  required
+  className="mb-4 p-2 w-full bg-gray-100"
+/>
+
+<label htmlFor="researchType" className="block mb-2">
+  Research Type:
+</label>
+<input
+  type="text"
+  id="researchType"
+  name="researchType"
+  value={article.researchType}
+  onChange={onChange}
+  required
+  className="mb-4 p-2 w-full bg-gray-100"
+/>
+
+<label htmlFor="participantType" className="block mb-2">
+  Participant Type:
+</label>
+<input
+  type="text"
+  id="participantType"
+  name="participantType"
+  value={article.participantType}
+  onChange={onChange}
+  required
+  className="mb-4 p-2 w-full bg-gray-100"
+/>
 
         <button
           type="submit"
