@@ -31,8 +31,13 @@ export class ArticlesController {
   async searchArticles(
     @Query('title') title: string,
     @Query('sePractice') sePractice: string,
+    @Query('publicationYear') publicationYear: string,
   ): Promise<Article[]> {
-    return this.articlesService.searchArticles(title, sePractice);
+    return this.articlesService.searchArticles(
+      title,
+      sePractice,
+      publicationYear,
+    );
   }
 
   @Get(':id')

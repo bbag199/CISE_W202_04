@@ -55,7 +55,11 @@ export class ArticlesService {
     return deletedArticle;
   }
 
-  async searchArticles(title: string, sePractice: string): Promise<Article[]> {
+  async searchArticles(
+    title: string,
+    sePractice: string,
+    publicationYear: string,
+  ): Promise<Article[]> {
     const query: any = {};
 
     if (title) {
@@ -64,6 +68,10 @@ export class ArticlesService {
 
     if (sePractice) {
       query.sePractice = { $regex: sePractice, $options: 'i' };
+    }
+
+    if (publicationYear) {
+      query.publicationYear = { $regex: publicationYear, $options: 'i' };
     }
 
     return this.articleModel.find(query).exec();
