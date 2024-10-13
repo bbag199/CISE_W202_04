@@ -10,12 +10,15 @@ interface Article {
   source: string;
   publicationYear: string;
   doi: string;
-  claim: string[];
-  evidence: string[];
   rating: number[];
   status: string;
-  
+  journalConferenceName: string;
+  sePractice: string;
+  evidenceResult: string;
+  researchType: string;
+  participantType: string;
 }
+
 
 const ArticleAdminPage = () => {
   const { id } = useParams();
@@ -28,6 +31,13 @@ const ArticleAdminPage = () => {
   const [editableClaim, setEditableClaim] = useState('');
   const [editableEvidence, setEditableEvidence] = useState('');
   const [editableStatus, setEditableStatus] = useState('');
+
+  const [editableJournalConferenceName, setEditableJournalConferenceName] = useState('');
+  const [editableSEPractice, setEditableSEPractice] = useState('');
+  const [editableEvidenceResult, setEditableEvidenceResult] = useState('');
+  const [editableResearchType, setEditableResearchType] = useState('');
+  const [editableParticipantType, setEditableParticipantType] = useState('');
+
 
 
   useEffect(() => {
@@ -44,6 +54,12 @@ const ArticleAdminPage = () => {
         setEditableClaim(data.claim.join(', '));
         setEditableEvidence(data.evidence.join(', '));
         setEditableStatus(data.status);
+
+        setEditableJournalConferenceName(data.journalConferenceName);
+  setEditableSEPractice(data.sePractice);
+  setEditableEvidenceResult(data.evidenceResult);
+  setEditableResearchType(data.researchType);
+  setEditableParticipantType(data.participantType);
       } catch (error) {
         console.error("Error fetching article:", error);
       }
@@ -69,6 +85,13 @@ const ArticleAdminPage = () => {
   const handleClaimChange = (e) => setEditableClaim(e.target.value);
   const handleEvidenceChange = (e) => setEditableEvidence(e.target.value);
   const handleStatusChange = (e) => setEditableStatus(e.target.value);
+
+  const handleJournalConferenceNameChange = (e) => setEditableJournalConferenceName(e.target.value);
+const handleSEPracticeChange = (e) => setEditableSEPractice(e.target.value);
+const handleEvidenceResultChange = (e) => setEditableEvidenceResult(e.target.value);
+const handleResearchTypeChange = (e) => setEditableResearchType(e.target.value);
+const handleParticipantTypeChange = (e) => setEditableParticipantType(e.target.value);
+
 
   
 
@@ -204,6 +227,62 @@ const ArticleAdminPage = () => {
     <option value="Analyzed">Analyzed</option>
   </select>
 </div>
+
+<div className="mb-4">
+  <label htmlFor="journalConferenceName" className="font-medium">Journal/Conference Name:</label>
+  <input
+    type="text"
+    id="journalConferenceName"
+    value={editableJournalConferenceName}
+    onChange={handleJournalConferenceNameChange}
+    className="block w-full p-2 border border-gray-300 rounded mt-1"
+  />
+</div>
+
+<div className="mb-4">
+  <label htmlFor="sePractice" className="font-medium">SE Practice:</label>
+  <input
+    type="text"
+    id="sePractice"
+    value={editableSEPractice}
+    onChange={handleSEPracticeChange}
+    className="block w-full p-2 border border-gray-300 rounded mt-1"
+  />
+</div>
+
+<div className="mb-4">
+  <label htmlFor="evidenceResult" className="font-medium">Evidence Result:</label>
+  <input
+    type="text"
+    id="evidenceResult"
+    value={editableEvidenceResult}
+    onChange={handleEvidenceResultChange}
+    className="block w-full p-2 border border-gray-300 rounded mt-1"
+  />
+</div>
+
+<div className="mb-4">
+  <label htmlFor="researchType" className="font-medium">Research Type:</label>
+  <input
+    type="text"
+    id="researchType"
+    value={editableResearchType}
+    onChange={handleResearchTypeChange}
+    className="block w-full p-2 border border-gray-300 rounded mt-1"
+  />
+</div>
+
+<div className="mb-4">
+  <label htmlFor="participantType" className="font-medium">Participant Type:</label>
+  <input
+    type="text"
+    id="participantType"
+    value={editableParticipantType}
+    onChange={handleParticipantTypeChange}
+    className="block w-full p-2 border border-gray-300 rounded mt-1"
+  />
+</div>
+
 
   
         <button
