@@ -39,10 +39,10 @@ export class Article {
   sePractice: string;
 
   @Prop({ required: true })
-  evidenceResult: string; 
+  evidenceResult: string;
 
   @Prop({ required: true })
-  researchType: string; 
+  researchType: string;
 
   @Prop({ required: true })
   participantType: string;
