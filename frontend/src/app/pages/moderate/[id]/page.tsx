@@ -122,51 +122,49 @@ const ModerateArticlePage = () => {
   }
 
   return (
-    <div className="min-h-screen">
-      <p>Moderation Page</p>
-
-      <br />
-
-      <div>
-        <h1>{displayedArticle.title}</h1>
-        <h3>{displayedArticle.authors}</h3>
-        <h3>{displayedArticle.source}, {displayedArticle.publicationYear}</h3>
-        <h3>
-          <a href={displayedArticle.doi} target="_blank" rel="noopener noreferrer">{displayedArticle.doi}</a>
-        </h3>
-        <h4>Article ID: {displayedArticle._id}</h4>
+    <div className="min-h-screen mt-16 p-8 bg-gray-50">
+      <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
+        <h1 className="text-2xl font-bold mb-4">Moderation Page</h1>
+        <div>
+          
+          <p className="mb-2"><strong>Title:</strong> {displayedArticle.title}</p>
+          <p className="mb-2"><strong>Authors:</strong> {displayedArticle.authors}</p>
+          <p className="mb-2"><strong>Source:</strong> {displayedArticle.source}, {displayedArticle.publicationYear}</p>
+          <p className="mb-2">
+            <strong>DOI:</strong>
+            <a href={displayedArticle.doi} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">{displayedArticle.doi}</a>
+          </p>
+          <p className="mb-2"><strong>Article ID:</strong> {displayedArticle._id}</p>
+        </div>
+  
+        <div className="flex mt-4 space-x-4">
+          <button 
+            onClick={onReject}
+            className={`px-4 py-2 font-semibold rounded ${
+              loadingSubmit
+                ? 'bg-red-300 text-red-700 cursor-not-allowed'  // Disabled styles
+                : 'bg-red-500 text-white hover:bg-red-700'      // Active styles
+            }`}
+            disabled={loadingSubmit}
+          >
+            Reject
+          </button>
+          <button 
+            onClick={onSubmit}
+            className={`px-4 py-2 font-semibold rounded ${
+              loadingSubmit
+                ? 'bg-blue-300 text-blue-700 cursor-not-allowed'  // Disabled styles
+                : 'bg-blue-500 text-white hover:bg-blue-700'      // Active styles
+            }`}
+            disabled={loadingSubmit}
+          >
+            Submit for Analysis
+          </button>
+        </div>
       </div>
-
-      <br />
-
-      <div className="flex space-x-4">
-        <button 
-          onClick={onReject}
-          // !! Disabled button style is pretty ugly
-          className={`px-4 py-2 font-semibold rounded ${
-            loadingSubmit
-              ? 'bg-red-300 text-red-700 cursor-not-allowed'  // Disabled styles
-              : 'bg-red-500 text-white hover:bg-red-600'      // Active styles
-          }`}
-          disabled={loadingSubmit}
-        >
-          Reject
-        </button>
-        <button 
-          onClick={onSubmit}
-          className={`px-4 py-2 font-semibold rounded ${
-            loadingSubmit
-              ? 'bg-blue-300 text-blue-700 cursor-not-allowed'  // Disabled styles
-              : 'bg-blue-500 text-white hover:bg-blue-600'      // Active styles
-          }`}
-          disabled={loadingSubmit}
-        >
-          Submit for Analysis
-        </button>
-      </div>
-
     </div>
-  ) 
+  );
+  
 
 };
 

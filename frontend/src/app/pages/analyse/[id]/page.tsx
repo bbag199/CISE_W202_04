@@ -151,119 +151,107 @@ const AnalyzePage = () => {
   }
 
   return (
-    <div className="min-h-screen">
-      <p>Analysis Page</p>
-
-      <br />
-
-      <div>
-        <h1>{displayedArticle.title}</h1>
-        <h3>{displayedArticle.authors}</h3>
-        <h3>
-          {displayedArticle.source}, {displayedArticle.publicationYear}
-        </h3>
-        <h3>
-          <a
-            href={displayedArticle.doi}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {displayedArticle.doi}
-          </a>
-        </h3>
-        <h4>Article ID: {displayedArticle._id}</h4>
-      </div>
-
-      <br />
-
-      <form onSubmit={onSubmit}>
-        {/*Text fields from claims and evd */}
+    <div className="min-h-screen mt-16 p-8 bg-gray-50">
+      <div className="max-w-4xl mx-auto shadow-lg rounded-lg p-6 bg-white">
+       
+        <h1 className="text-2xl font-bold mb-4">Analysis Page</h1>
+  
         <div>
-          <label>Claim</label>
-          {claim.map((claimValue, index) => (
-            <div key={index} className="mb-2">
-              <input
-                type="text"
-                value={claimValue}
-                onChange={(e) => handleClaimChange(index, e.target.value)}
-                placeholder="Enter claim"
-                className="border p-2 rounded w-full bg-gray-100"
-                required
-              />
-              {claim.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeClaimField(index)}
-                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
-                >
-                  Remove Claim
-                </button>
-              )}
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addClaimField}
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Add Claim
-          </button>
-        </div>
-        
-        <br />
-
-        <div>
-          <label>Evidence</label>
-          {evidence.map((evidenceValue, index) => (
-            <div key={index} className="mb-2">
-              <input
-                type="text"
-                value={evidenceValue}
-                onChange={(e) => handleEvidenceChange(index, e.target.value)}
-                placeholder="Enter evidence"
-                className="border p-2 rounded w-full bg-gray-100"
-                required
-              />
-              {evidence.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeEvidenceField(index)}
-                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
-                >
-                  Remove Evidence
-                </button>
-              )}
-            </div>
-          ))}
           
-          <button
-            type="button"
-            onClick={addEvidenceField}
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Add Evidence
-          </button>   
+          <p className="mb-2"><strong>Title:</strong> {displayedArticle.title}</p>
+          <p className="mb-2"><strong>Authors:</strong> {displayedArticle.authors}</p>
+          <p className="mb-2"><strong>Source:</strong> {displayedArticle.source}, {displayedArticle.publicationYear}</p>
+          <p className="mb-2">
+            <strong>DOI: </strong>
+            <a href={displayedArticle.doi} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">{displayedArticle.doi}</a>
+          </p>
+          <p className="mb-2"><strong>Article ID:</strong> {displayedArticle._id}</p>
         </div>
-        
-        <br />
-
-        <div className="flex space-x-4 mt-4">
-          <button
-            type="submit"
-            value="submit"
-            className={`px-4 py-2 font-semibold rounded ${
-              loadingSubmit
-                ? "bg-blue-300 text-blue-700 cursor-not-allowed" // Disabled styles
-                : "bg-blue-500 text-white hover:bg-blue-600" // Active styles
-            }`}
-            disabled={loadingSubmit}
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+  
+        <form onSubmit={onSubmit}>
+          <div className="mb-6">
+            <label className="block mb-2 font-medium">Claim</label>
+            {claim.map((claimValue, index) => (
+              <div key={index} className="mb-4">
+                <input
+                  type="text"
+                  value={claimValue}
+                  onChange={(e) => handleClaimChange(index, e.target.value)}
+                  placeholder="Enter claim"
+                  className="border p-2 rounded w-full bg-gray-100"
+                  required
+                />
+                {claim.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeClaimField(index)}
+                    className="bg-red-500 text-white px-2 py-1 rounded mt-2 hover:bg-red-700"
+                  >
+                    Remove Claim
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addClaimField}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+            >
+              Add Claim
+            </button>
+          </div>
+  
+          <div className="mb-6">
+            <label className="block mb-2 font-medium">Evidence</label>
+            {evidence.map((evidenceValue, index) => (
+              <div key={index} className="mb-4">
+                <input
+                  type="text"
+                  value={evidenceValue}
+                  onChange={(e) => handleEvidenceChange(index, e.target.value)}
+                  placeholder="Enter evidence"
+                  className="border p-2 rounded w-full bg-gray-100"
+                  required
+                />
+                {evidence.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeEvidenceField(index)}
+                    className="bg-red-500 text-white px-2 py-1 rounded mt-2 hover:bg-red-700"
+                  >
+                    Remove Evidence
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addEvidenceField}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+            >
+              Add Evidence
+            </button>   
+          </div>
+  
+          <div className="flex space-x-4 mt-4">
+            <button
+              type="submit"
+              value="submit"
+              className={`px-4 py-2 font-semibold rounded ${
+                loadingSubmit
+                  ? "bg-blue-300 text-blue-700 cursor-not-allowed" // Disabled styles
+                  : "bg-blue-500 text-white hover:bg-blue-700" // Active styles
+              }`}
+              disabled={loadingSubmit}
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
+  
 };
 
 export default AnalyzePage;
