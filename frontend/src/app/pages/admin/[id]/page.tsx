@@ -43,7 +43,7 @@ const ArticleAdminPage = () => {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const response = await fetch(`http://localhost:8082/articles/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`);
         const data = await response.json();
         setArticle(data);
         setEditableTitle(data.title);
@@ -112,7 +112,7 @@ const handleParticipantTypeChange = (e: { target: { value: SetStateAction<string
     };
   
     try {
-      const response = await fetch(`http://localhost:8082/articles/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

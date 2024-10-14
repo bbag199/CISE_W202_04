@@ -26,7 +26,7 @@ const BrowseAnalyze = () => {
     const fetchArticles = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8082/articles/status/moderated"
+          "${process.env.NEXT_PUBLIC_API_URL}/articles/status/moderated"
         );
         const data = await response.json();
 
