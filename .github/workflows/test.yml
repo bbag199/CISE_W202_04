@@ -3,11 +3,9 @@ on:
   push:
     branches: 
       - main
-      - develop
   pull_request:
     branches: 
       - main
-      - develop
   workflow_call:
   workflow_dispatch:
 
@@ -16,9 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: npm install
-      - name: Change to backend directory, get backend dependencies
-        run: cd backend && npm install
-      - name: Run tests
-        run: npm run test
+      - name: Change to backend directory and run tests
+        run: |
+          cd backend
+          npm install
+          npm run test
