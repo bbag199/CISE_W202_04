@@ -38,7 +38,7 @@ const ModerateArticlePage = () => {
   const fetchArticle = async (id: string) => {
     try {
       setLoadingArticle(true);
-      const response = await fetch(`http://localhost:8082/articles/${id}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -61,7 +61,7 @@ const ModerateArticlePage = () => {
   const onSubmit = async () => {
     setLoadingSubmit(true);
     try {
-      const response = await fetch(`http://localhost:8082/articles/${displayedArticle!._id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${displayedArticle!._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const ModerateArticlePage = () => {
   const onReject = async () => {
     setLoadingSubmit(true);
     try {
-      const response = await fetch(`http://localhost:8082/articles/${displayedArticle!._id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${displayedArticle!._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

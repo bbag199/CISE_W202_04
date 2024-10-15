@@ -45,7 +45,7 @@ const AnalyzePage = () => {
   const fetchArticle = async (id: string) => {
     try {
       setLoadingArticle(true);
-      const response = await fetch(`http://localhost:8082/articles/${id}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -79,7 +79,7 @@ const AnalyzePage = () => {
       const concatEvidence = evidence.join(', ');
 
       const response = await fetch(
-        `http://localhost:8082/articles/${displayedArticle!._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/articles/${displayedArticle!._id}`,
         {
           method: "PUT",
           headers: {

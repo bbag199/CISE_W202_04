@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 
 interface Article {
   _id: string;
@@ -43,7 +43,7 @@ const ArticleAdminPage = () => {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const response = await fetch(`http://localhost:8082/articles/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`);
         const data = await response.json();
         setArticle(data);
         setEditableTitle(data.title);
@@ -78,19 +78,19 @@ const ArticleAdminPage = () => {
     setEditableTitle(event.target.value);
   };
 
-  const handleAuthorsChange = (e) => setEditableAuthors(e.target.value);
-  const handleSourceChange = (e) => setEditableSource(e.target.value);
-  const handleYearChange = (e) => setEditableYear(e.target.value);
-  const handleDOIChange = (e) => setEditableDOI(e.target.value);
-  const handleClaimChange = (e) => setEditableClaim(e.target.value);
-  const handleEvidenceChange = (e) => setEditableEvidence(e.target.value);
-  const handleStatusChange = (e) => setEditableStatus(e.target.value);
+  const handleAuthorsChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableAuthors(e.target.value);
+  const handleSourceChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableSource(e.target.value);
+  const handleYearChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableYear(e.target.value);
+  const handleDOIChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableDOI(e.target.value);
+  const handleClaimChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableClaim(e.target.value);
+  const handleEvidenceChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableEvidence(e.target.value);
+  const handleStatusChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableStatus(e.target.value);
 
-  const handleJournalConferenceNameChange = (e) => setEditableJournalConferenceName(e.target.value);
-const handleSEPracticeChange = (e) => setEditableSEPractice(e.target.value);
-const handleEvidenceResultChange = (e) => setEditableEvidenceResult(e.target.value);
-const handleResearchTypeChange = (e) => setEditableResearchType(e.target.value);
-const handleParticipantTypeChange = (e) => setEditableParticipantType(e.target.value);
+  const handleJournalConferenceNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableJournalConferenceName(e.target.value);
+const handleSEPracticeChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableSEPractice(e.target.value);
+const handleEvidenceResultChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableEvidenceResult(e.target.value);
+const handleResearchTypeChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableResearchType(e.target.value);
+const handleParticipantTypeChange = (e: { target: { value: SetStateAction<string>; }; }) => setEditableParticipantType(e.target.value);
 
 
   
@@ -112,7 +112,7 @@ const handleParticipantTypeChange = (e) => setEditableParticipantType(e.target.v
     };
   
     try {
-      const response = await fetch(`http://localhost:8082/articles/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ const handleParticipantTypeChange = (e) => setEditableParticipantType(e.target.v
             value={editableClaim}
             onChange={handleClaimChange}
             className="block w-full p-2 border border-gray-300 rounded mt-1"
-            rows="3"
+            rows={3}
           />
         </div>
   
@@ -210,7 +210,7 @@ const handleParticipantTypeChange = (e) => setEditableParticipantType(e.target.v
             value={editableEvidence}
             onChange={handleEvidenceChange}
             className="block w-full p-2 border border-gray-300 rounded mt-1"
-            rows="3"
+            rows={3}
           />
         </div>
   

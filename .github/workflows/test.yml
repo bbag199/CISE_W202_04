@@ -1,0 +1,21 @@
+name: GitHub Actions Test
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Change to backend directory and run tests
+        run: |
+          cd backend
+          npm install
+          npm run test

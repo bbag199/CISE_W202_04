@@ -35,7 +35,7 @@ const BrowsePage = () => {
   const fetchArticles = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8082/articles');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`);
       const data = await response.json();
       setArticles(data);
     } catch (error) {
@@ -48,7 +48,7 @@ const BrowsePage = () => {
   const searchArticles = async (title: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:8082/articles/search?title=${title}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/search?title=${title}`);
       const data = await response.json();
       setArticles(data);
     } catch (error) {

@@ -43,7 +43,7 @@ const BrowsePage = () => {
   const fetchArticles = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:8082/articles");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles`);
       const data = await response.json();
       setArticles(data);
     } catch (error) {
@@ -63,7 +63,7 @@ const BrowsePage = () => {
       query.append(type, term);
 
       const response = await fetch(
-        `http://localhost:8082/articles/search?${query.toString()}`
+        `${process.env.NEXT_PUBLIC_API_URL}/articles/search?${query.toString()}`
       );
       const data = await response.json();
       setArticles(data);
