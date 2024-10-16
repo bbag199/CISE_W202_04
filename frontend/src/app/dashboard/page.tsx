@@ -19,7 +19,7 @@ const Dashboard = () => {
 
     const fetchAwaitingModeration = async () => {
       try {
-        const response = await fetch('http://localhost:8082/articles/count/Unmoderated');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/count/Unmoderated`);
         const data = await response.json();
         setAwaitingModeration(data);
       } catch (error) {
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     const fetchAwaitingAnalysis = async () => {
       try {
-        const response = await fetch('http://localhost:8082/articles/count/Moderated');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/count/Moderated`);
         const data = await response.json();
         setAwaitingAnalysis(data);
       } catch (error) {

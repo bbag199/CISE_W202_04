@@ -7,6 +7,12 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
+  // Enable CORS for any origin
+  app.enableCors({
+    origin: true, // This allows all origins
+    credentials: true, // Allows cookies and authentication headers
+  });
+
   app.enableCors({ origin: true, credentials: true });
 
   const port = process.env.PORT || 8082;
